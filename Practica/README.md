@@ -1,2 +1,1 @@
-gATA
-FDASFADFA
+Site bun de coletie pentru jocuri
