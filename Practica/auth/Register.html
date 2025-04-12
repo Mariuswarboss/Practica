@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>  
+  <meta charset="UTF-8">
+  <title>Registrare</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.register.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <div class="forms">
+      <div class="form login">
+        <span class="title">Login</span>
+        <form action="#">
+          <div class="input-field">
+            <input type="text" placeholder="Enter your email" id="login-email" required>
+            <span class="material-symbols-outlined icon-left">mail</span>
+          </div>
+          <div class="input-field">
+            <input type="password" class="password" placeholder="Enter your password" id="login-password" required>
+            <span class="material-symbols-outlined icon-left">lock</span>
+            <span class="material-symbols-outlined icon-right">visibility_off</span>
+          </div>
+
+          <div class="checkbox-text">
+            <div class="checkbox-content">
+                  <input type="checkbox" id="logCheck">
+                  <label for="logCheck" class="text">Remeber me</label>
+            </div>
+            
+            <a href="#" class="text">Forgot password?</a>
+          </div>
+          <div class="input-field button">
+            <input type="button" value="Login Now" id="login-btn">
+          </div>
+        </form>
+        <div class="login-signup">
+            <span class="text">Not a member?
+                <a href="#" class="text signup-link">Signup now</a>
+            </span>
+        </div>
+      </div>
+
+      <!--Registrare-->
+      <!--Registrare-->
+<div class="form signup">
+  <span class="title">Registration</span>
+  <form action="#">
+    <div class="input-field">
+      <input type="text" placeholder="Enter your name" id="firstname-input" required>
+      <span class="material-symbols-outlined icon-left">person</span>
+    </div>
+    <div class="input-field">
+      <input type="text" placeholder="Enter your email" id="email-input" required>
+      <span class="material-symbols-outlined icon-left">mail</span>
+    </div>
+    <div class="input-field">
+      <input type="password" class="password" placeholder="Create a password" id="password-input" required>
+      <span class="material-symbols-outlined icon-left">lock</span>
+    </div>
+    <div class="input-field">
+      <input type="password" class="password" placeholder="Confirm password" id="repeat-password-input" required>
+      <span class="material-symbols-outlined icon-left">lock</span>
+      <span class="material-symbols-outlined icon-right">visibility_off</span>
+    </div>
+
+     <div class="checkbox-text">
+       <div class="checkbox-content">
+         <input type="checkbox" id="sigCheck">
+         <label for="sigCheck" class="text">Remember me</label>
+        </div>
+        <a href="#" class="text">Forgot password?</a>
+      </div>
+
+      <div class="input-field button">
+         <input type="button" value="Register Now" id="register-btn">
+      </div>
+    </form>
+      <div class="login-signup">
+         <span class="text">Already a member?
+          <a href="#" class="text login-link">Login now</a>
+         </span>
+       </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="jlogin.js"></script>
+</body>
+</html>
