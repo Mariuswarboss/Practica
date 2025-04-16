@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Profile Card</title>
+  <link rel="stylesheet" href="profil.css">
+</head>
+<body>
+  <div class="toggle-container">
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider round"></span>
+    </label>
+  </div>
+
+  <div class="profile-container">
+    <div class="sidebar">
+      <img src="logo.png" alt="Logo" class="logo">
+      <button class="name-btn">NAME</button>
+
+      <div class="socials">
+        <a href="#" target="_blank">Instagram</a>
+        <a href="#" target="_blank">GitHub</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="card">rANK: Legend</div>
+      <div class="card">bIO: Passionate about coding and gaming 🎮</div>
+      <div class="card" onclick="toggleCollection()">🎮 View Collection</div>
+
+      <div id="collection" class="collection hidden">
+        <ul>
+          <li>The Witcher 3</li>
+          <li>Cyberpunk 2077</li>
+          <li>Hollow Knight</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="profil.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="register.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body>
+  <div class="background">
+    <div class="container">
+      <div class="form signup">
+        <span class="title">Registration</span>
+        <form action="#">
+          <div class="input-field">
+            <input type="text" placeholder="Enter your name" id="firstname-input" required>
+            <span class="material-symbols-outlined icon-left">person</span>
+          </div>
+          <div class="input-field">
+            <input type="text" placeholder="Enter your email" id="email-input" required>
+            <span class="material-symbols-outlined icon-left">mail</span>
+          </div>
+          <div class="input-field">
+            <input type="password" class="password" placeholder="Create a password" id="password-input" required>
+            <span class="material-symbols-outlined icon-left">lock</span>
+          </div>
+          <div class="input-field">
+            <input type="password" class="password" placeholder="Confirm password" id="repeat-password-input" required>
+            <span class="material-symbols-outlined icon-left">lock</span>
+            <span class="material-symbols-outlined icon-right">visibility_off</span>
+          </div>
+
+          <div class="checkbox-text">
+            <div class="checkbox-content">
+              <input type="checkbox" id="sigCheck">
+              <label for="sigCheck" class="text">Remember me</label>
+            </div>
+            <a href="#" class="text">Forgot password?</a>
+          </div>
+
+          <div class="input-field button">
+            <input type="button" value="Register Now" id="register-btn">
+          </div>
+        </form>
+        <div class="login-signup">
+          <span class="text">Already a member?
+            <a href="C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\auth\login.html" class="text">Login now</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="javareg.js"></script>
+</body>
+</html>

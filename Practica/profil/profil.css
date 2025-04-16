@@ -1,0 +1,142 @@
+:root {
+    --bg-color: #220052;
+    --text-color: white;
+    --card-bg: #111;
+    --hover: #ff6600;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .profile-container {
+    display: flex;
+    height: 100vh;
+    padding: 40px;
+  }
+  
+  .sidebar {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .logo {
+    width: 120px;
+  }
+  
+  .name-btn {
+    background-color: var(--card-bg);
+    color: white;
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .name-btn:hover {
+    background-color: var(--hover);
+    color: #000;
+  }
+  
+  .socials a {
+    display: block;
+    margin: 5px 0;
+    color: var(--text-color);
+    text-decoration: none;
+  }
+  
+  .socials a:hover {
+    color: var(--hover);
+  }
+  
+  .content {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    background-color: var(--hover);
+    color: black;
+  }
+  
+  .collection {
+    margin-top: 10px;
+    background-color: #00000080;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* Dark/Light toggle */
+  .toggle-container {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gray;
+    transition: .4s;
+    border-radius: 25px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #ff6600;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(25px);
+  }
+  

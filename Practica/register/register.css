@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  background-color: #4070f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 430px;
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.form .title {
+  position: relative;
+  font-size: 27px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.form .title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 3px;
+  width: 30px;
+  background-color: #4070f4;
+  border-radius: 25px;
+}
+
+.input-field {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.input-field input {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 0 35px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  border-bottom: 2px solid #ccc;
+  border-top: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.input-field input:focus,
+.input-field input:valid {
+  border-bottom-color: #4070f4;
+}
+
+.input-field .material-symbols-outlined {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 23px;
+}
+
+.input-field input:focus ~ .material-symbols-outlined,
+.input-field input:valid ~ .material-symbols-outlined {
+  color: #4070f4;
+}
+
+.icon-left {
+  left: 0;
+}
+
+.icon-right {
+  right: 0;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.checkbox-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.checkbox-content {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-content input {
+  margin: 0 8px -2px 4px;
+  accent-color: #4070f4;
+}
+
+.form .text {
+  color: #333;
+  font-size: 14px;
+}
+
+.form a.text {
+  color: #4070f4;
+  text-decoration: none;
+}
+
+.form a:hover {
+  text-decoration: underline;
+}
+
+.input-field.button {
+  margin-top: 30px;
+}
+
+.input-field.button input {
+  border: none;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 6px;
+  background-color: #4070f4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.input-field.button input:hover {
+  background-color: #265df2;
+}
+
+.login-signup {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.input-field.incorrect input {
+  border-bottom-color: red !important;
+}
+
+.input-field .error-text {
+  display: none;
+  font-size: 12px;
+  color: red;
+  margin-top: 5px;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+}
+
+.input-field.incorrect .error-text {
+  display: block;
+}
