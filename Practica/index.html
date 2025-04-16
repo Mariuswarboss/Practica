@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./Main_conten/main.css">
+  <link rel="stylesheet" href="./navbar/navbar.css">
+  <link rel="stylesheet" href="./meniu/meniu.css">
+  <link rel="stylesheet" href="./footer/footer.css">
+</head>
+<body style="margin: 0; font-family: 'Inter', sans-serif;">
+
+  <script>
+    if (!localStorage.getItem("isLoggedIn")) {
+      window.location.href = "./auth/login.html";
+    }
+  </script>
+
+  <div id="navbar"></div>
+  <div class="content-wrapper">
+    <div id="meniu"></div>
+    <div id="main-content"></div>
+  </div>
+  <div id="footer"></div>
+
+  <script>
+    async function loadComponent(id, url) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
+        const html = await res.text();
+        document.getElementById(id).innerHTML = html;
+        
+        // Load corresponding JS after HTML is loaded
+        if(id === "navbar") {
+          const script = document.createElement('script');
+          script.src = "./navbar/navbar.js";
+          document.body.appendChild(script);
+        }
+        // Similar for other components if needed
+      } catch (error) {
+        console.error(error);
+        document.getElementById(id).innerHTML = `<div class="error">Error loading ${id} component</div>`;
+      }
+    }
+
+    // Load all components
+    document.addEventListener('DOMContentLoaded', () => {
+      loadComponent("navbar", "./navbar/navbar.html");
+      loadComponent("meniu", "./meniu/meniu.html");
+      loadComponent("main-content", "./Main_conten/main.html");
+      loadComponent("footer", "./footer/footer.html");
+    });
+  </script>
+</body>
+</html>

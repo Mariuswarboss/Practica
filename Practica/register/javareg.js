@@ -59,5 +59,8 @@ registerBtn.addEventListener("click", () => {
     alert(errors.join("\n"));
   } else {
     alert("Registration successful!");
+    localStorage.setItem("isLoggedIn", "true"); 
+    window.location.href = "../index.html"; 
   }
+  
 });

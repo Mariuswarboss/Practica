@@ -1,0 +1,101 @@
+.navbar {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  background: linear-gradient(135deg, #4070f4 0%, #4070f4 100%);
+  padding: 10px 30px;
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0cm;
+  width: 100%;
+  
+}
+
+.navbar-left, .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 1.8em;
+  font-weight: bold;
+  background: linear-gradient(to right, #214071, #9cb2eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.user-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3b82f6;
+}
+
+.search-bar {
+  flex: 0.6;
+  display: flex;
+  max-width: 500px;
+}
+
+.search-bar input {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  width: 100%;
+  font-size: 0.9em;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.search-bar button {
+  background: linear-gradient(to right, #3b82f6, #6366f1);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 0 25px 25px 0;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-bar button:hover {
+  opacity: 0.9;
+}
+
+.profile-btn, .logout-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 15px;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9em;
+}
+
+.profile-btn:hover, .logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-btn i, .logout-btn i {
+  font-size: 0.9em;
+}
+.navbar-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 2;
+}

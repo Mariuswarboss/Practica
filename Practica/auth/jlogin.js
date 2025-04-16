@@ -37,5 +37,8 @@ loginBtn.addEventListener("click", () => {
     alert(errors.join("\n"));
   } else {
     alert("Login successful!");
+    localStorage.setItem("isLoggedIn", "true"); // salvăm autentificarea
+    window.location.href = "../index.html"; // redirect spre pagina principală
   }
+  
 });
