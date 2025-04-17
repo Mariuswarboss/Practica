@@ -236,8 +236,10 @@
   input:checked + .slider:before {
     transform: translateX(30px);
   }
-  
-  /* Light mode styles */
+  .user-avatar{
+    border-radius: 50%;
+  }
+
   body.light-mode {
     --bg-color: #ffffff;
     --text-color: #000000;
@@ -252,3 +254,53 @@
   body.light-mode .stat-label {
     color: rgba(0, 0, 0, 0.7);
   }
+
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 8px;
+  color: white;
+  z-index: 10000;
+  animation: slide-in 0.5s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.notification.success {
+  background: linear-gradient(to right, #10b981, #059669);
+}
+
+.notification.error {
+  background: linear-gradient(to right, #ef4444, #dc2626);
+}
+
+.notification.info {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+}
+
+.fade-out {
+  animation: fade-out 0.5s ease-out forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

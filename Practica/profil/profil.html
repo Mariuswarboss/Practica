@@ -1,82 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Profile Card</title>
   <link rel="stylesheet" href="profil.css">
+  <script src="https://kit.fontawesome.com/a2e0bf0a5f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="profile-container">
-        <div class="toggle-container">
-          <label class="switch">
-            <input type="checkbox" id="modeToggle">
-            <span class="slider round"></span>
-          </label>
+  <div class="profile-container">
+    <div class="toggle-container">
+      <label class="switch">
+        <input type="checkbox" id="modeToggle">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="User" class="avatar-image user-avatar" width="150" height="130">
+        <button class="edit-avatar"><i class="fas fa-camera"></i></button>
+      </div>
+      <h1>User Profile</h1>
+      <div class="profile-stats">
+        <div class="stat-item">
+          <span class="stat-number">42</span>
+          <span class="stat-label">Games</span>
         </div>
-      
-        <div class="profile-header">
-          <div class="profile-avatar">
-            <img src="./assets/user-avatar.png" alt="Profile" class="avatar-image">
-            <button class="edit-avatar"><i class="fas fa-camera"></i></button>
-          </div>
-          <h1>User Profile</h1>
-          <div class="profile-stats">
-            <div class="stat-item">
-              <span class="stat-number">42</span>
-              <span class="stat-label">Games</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">7</span>
-              <span class="stat-label">Collections</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">156</span>
-              <span class="stat-label">Hours</span>
-            </div>
-          </div>
+        <div class="stat-item">
+          <span class="stat-number">7</span>
+          <span class="stat-label">Collections</span>
         </div>
-      
-        <div class="profile-content">
-          <div class="profile-card">
-            <h2><i class="fas fa-user"></i> About Me</h2>
-            <div class="editable-field">
-              <p id="bio-text">Passionate gamer and developer. Love RPGs and indie games!</p>
-              <button class="edit-btn" onclick="editField('bio-text')"><i class="fas fa-edit"></i></button>
-            </div>
+        <div class="stat-item">
+          <span class="stat-number">156</span>
+          <span class="stat-label">Hours</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-content">
+      <div class="profile-card">
+        <h2><i class="fas fa-user"></i> About Me</h2>
+        <div class="editable-field">
+          <p id="bio-text">Passionate gamer and developer. Love RPGs and indie games!</p>
+          <button class="edit-btn" onclick="editField('bio-text')"><i class="fas fa-edit"></i></button>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <h2><i class="fas fa-trophy"></i> Achievements</h2>
+        <div class="achievements-grid">
+          <div class="achievement-item">
+            <i class="fas fa-medal gold"></i>
+            <span>Completed 10 Games</span>
           </div>
-      
-          <div class="profile-card">
-            <h2><i class="fas fa-trophy"></i> Achievements</h2>
-            <div class="achievements-grid">
-              <div class="achievement-item">
-                <i class="fas fa-medal gold"></i>
-                <span>Completed 10 Games</span>
-              </div>
-              <div class="achievement-item">
-                <i class="fas fa-medal silver"></i>
-                <span>100 Hours Played</span>
-              </div>
-              <div class="achievement-item">
-                <i class="fas fa-medal bronze"></i>
-                <span>First Collection</span>
-              </div>
-            </div>
+          <div class="achievement-item">
+            <i class="fas fa-medal silver"></i>
+            <span>100 Hours Played</span>
           </div>
-      
-          <div class="profile-card" onclick="toggleCollection()">
-            <h2><i class="fas fa-gamepad"></i> Favorite Games</h2>
-            <div id="collection" class="collection hidden">
-              <ul>
-                <li>The Witcher 3: Wild Hunt</li>
-                <li>Cyberpunk 2077</li>
-                <li>Hollow Knight</li>
-                <li>Red Dead Redemption 2</li>
-                <li>Elden Ring</li>
-              </ul>
-            </div>
+          <div class="achievement-item">
+            <i class="fas fa-medal bronze"></i>
+            <span>First Collection</span>
           </div>
         </div>
       </div>
+
+      <div class="profile-card">
+        <h2><i class="fas fa-gamepad"></i> Favorite Games</h2>
+        <div class="editable-field">
+          <ul id="fav-games-list">
+            <li>The Witcher 3: Wild Hunt</li>
+            <li>Cyberpunk 2077</li>
+            <li>Hollow Knight</li>
+            <li>Red Dead Redemption 2</li>
+            <li>Elden Ring</li>
+          </ul>
+          <button class="edit-btn" onclick="editField('fav-games-list')"><i class="fas fa-edit"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="profil.js"></script>
 </body>
 </html>

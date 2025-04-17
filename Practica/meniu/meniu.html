@@ -1,49 +1,55 @@
 <!DOCTYPE html>
- <html>
-  <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="meniu.css">
- </head>
- <body>
- <div class="sidebar">
-    <ul>
-      <li>
-        <a href="#" onclick="loadSection('home')">
-          <i class="fas fa-home"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="loadSection('yourGames')">
-          <i class="fas fa-gamepad"></i>
-          <span>Your Games</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="loadSection('collections')">
-          <i class="fas fa-folder"></i>
-          <span>Collections</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="loadSection('reviews')">
-          <i class="fas fa-star"></i>
-          <span>Reviews</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="loadSection('friends')">
-          <i class="fas fa-users"></i>
-          <span>Friends</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="loadSection('settings')">
-          <i class="fas fa-cog"></i>
-          <span>Settings</span>
-        </a>
-      </li>
-    </ul>
-  </div> 
- </body>
- </html>
+<html>
+<head>
+    <title>Testare_HTML</title>
+    <meta charset="UTF-8">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="meniu.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+    <div class="container">
+        <button class="menu-btn" id="menu-btn">
+            <i class='bx bx-menu'></i>
+        </button>
+                <aside id="sidebar">
+            <div class="top">
+                <div class="logo">
+                    <h2><span class="danger"></span></h2>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="#">
+                    <span class="material-symbols-outlined">Home</span>
+                    <h3>Home</h3>
+                </a>  
+                <a href="#">
+                    <span class="material-symbols-outlined">book</span>
+                    <h3>My games</h3>
+                </a>  
+                <a href="#">
+                    <span class="material-symbols-outlined">check_box_outline_blank</span>
+                    <h3>Reviews</h3>
+                </a>  
+                <a href="#">
+                    <span class="material-symbols-outlined">Table</span>
+                    <h3>Settings</h3>
+                </a>  
+                <a href="#">
+                    <span class="material-symbols-outlined">Notifications</span>
+                    <h3>Notifications</h3>
+                </a>   
+                <a href="#">
+                    <span class="material-symbols-outlined">architecture</span>
+                    <h3>Connect</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">app_badging</span>
+                    <h3>Collection</h3>
+                </a> 
+            </div>
+        </aside>
+    </div>
+    <script src="meniu.js"></script>
+</body>
+</html>
