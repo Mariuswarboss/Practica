@@ -1,14 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Main Content</title>
-  <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPalace - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <div class="main-container">
-        <div id="main-section"></div>
-      </div>
-  <script src="main.js"></script>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo">
+                    <i data-lucide="gamepad-2" class="icon gaming"></i>
+                    <h1>PixelPalace</h1>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active"><i data-lucide="home"></i> Home</a></li>
+                    <li><a href="my-games.html"><i data-lucide="gamepad-2"></i> My Games</a></li>
+                    <li><a href="reviews.html"><i data-lucide="star"></i> Reviews</a></li>
+                    <li><a href="collections.html"><i data-lucide="folder-open"></i> Collections</a></li>
+                    <li><a href="connect.html"><i data-lucide="link"></i> Connect</a></li>
+                    <li><a href="notifications.html"><i data-lucide="bell"></i> Notifications</a></li>
+                    <li><a href="settings.html"><i data-lucide="settings"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Pixel Palace v1.0</p>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>Discover your next gaming adventure</h1>
+                    <p>Track your games, discover new titles, and connect with friends in one place.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary">Browse Games</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+            
+            <section class="section">
+                <h2 class="section-title"><i data-lucide="gamepad-2" class="icon gaming"></i> Featured Games</h2>
+                <div class="game-grid">
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://via.placeholder.com/300x200?text=The+Witcher+3" alt="The Witcher 3">
+                        </div>
+                        <div class="game-info">
+                            <h3>The Witcher 3</h3>
+                            <p class="game-genre">RPG</p>
+                            <div class="rating-stars">
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <span>(4.9)</span>
+                            </div>
+                        </div>
+                    </div>
+               
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2 class="section-title">Recently Added</h2>
+                <div class="game-grid">
+                 
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

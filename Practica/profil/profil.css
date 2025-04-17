@@ -1,9 +1,9 @@
 :root {
-    --bg-color: #1e1b4b;
+    --bg-color: #4040f4;
     --text-color: white;
-    --card-bg: #111827;
-    --hover: #3b82f6;
-    --primary: #3b82f6;
+    --card-bg: #000103;
+    --hover: #9bbef5;
+    --primary: #b3d0fe;
     --secondary: #8b5cf6;
   }
   
@@ -186,7 +186,6 @@
     display: none;
   }
   
-  /* Dark/Light toggle */
   .toggle-container {
     text-align: right;
     margin-bottom: 20px;
