@@ -1,282 +1,324 @@
-// Sample game data
-const sampleGames = [
-    {
-      id: 1,
-      title: "The Witcher 3",
-      genre: "RPG",
-      rating: 4.9,
-      image: "https://via.placeholder.com/300x200?text=The+Witcher+3"
+// Constants
+const THEMES = {
+    LIGHT: 'light',
+    DARK: 'dark'
+};
+
+// DOM Elements Cache
+const domCache = {
+    body: document.body,
+    themeToggle: document.querySelector('.theme-toggle')
+};
+
+// Theme Management
+const ThemeManager = {
+    currentTheme: localStorage.getItem('theme') || THEMES.LIGHT,
+
+    init() {
+        this.applyTheme(this.currentTheme);
+        this.setupThemeToggle();
+        this.setupStorageListener();
     },
-    {
-      id: 2,
-      title: "Cyberpunk 2077",
-      genre: "RPG",
-      rating: 3.8,
-      image: "https://via.placeholder.com/300x200?text=Cyberpunk+2077"
+
+    applyTheme(theme) {
+        domCache.body.classList.toggle('dark', theme === THEMES.DARK);
+        this.currentTheme = theme;
+        localStorage.setItem('theme', theme);
+        this.updateThemeToggle();
     },
-    {
-      id: 3,
-      title: "Red Dead Redemption 2",
-      genre: "Adventure",
-      rating: 4.8,
-      image: "https://via.placeholder.com/300x200?text=Red+Dead+Redemption+2"
+
+    updateThemeToggle() {
+        if (!domCache.themeToggle) return;
+        
+        const icon = domCache.themeToggle.querySelector('i');
+        const text = domCache.themeToggle.querySelector('span');
+        
+        if (this.currentTheme === THEMES.DARK) {
+            icon?.setAttribute('data-lucide', 'moon');
+            text?.textContent = 'Dark';
+        } else {
+            icon?.setAttribute('data-lucide', 'sun');
+            text?.textContent = 'Light';
+        }
+        lucide.createIcons();
     },
-    {
-      id: 4,
-      title: "Elden Ring",
-      genre: "Action RPG",
-      rating: 4.7,
-      image: "https://via.placeholder.com/300x200?text=Elden+Ring"
+
+    setupThemeToggle() {
+        domCache.themeToggle?.addEventListener('click', () => {
+            const newTheme = this.currentTheme === THEMES.DARK ? THEMES.LIGHT : THEMES.DARK;
+            this.applyTheme(newTheme);
+            this.triggerThemeEvent();
+            Utils.showToast(`Switched to ${newTheme} mode`);
+        });
+    },
+
+    setupStorageListener() {
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'theme' || event.key === 'theme-event') {
+                this.applyTheme(localStorage.getItem('theme') || THEMES.LIGHT);
+            }
+        });
+    },
+
+    triggerThemeEvent() {
+        localStorage.setItem('theme-event', Date.now());
     }
-  ];
-  
-  // Sample collections data
-  let collections = [
-    { id: 1, name: "Favorite RPGs", games: [1, 2] },
-    { id: 2, name: "Open World", games: [1, 3] }
-  ];
-  
-  function loadSection(section) {
-    const main = document.getElementById("main-section");
-    
-    switch(section) {
-      case "home":
-        renderHome(main);
-        break;
-      case "yourGames":
-        renderYourGames(main);
-        break;
-      case "collections":
-        renderCollections(main);
-        break;
-      case "reviews":
-        renderReviews(main);
-        break;
-      case "friends":
-        renderFriends(main);
-        break;
-      case "settings":
-        renderSettings(main);
-        break;
-      default:
-        renderHome(main);
-    }
-    
-    // Update active menu item
-    document.querySelectorAll('.sidebar ul li a').forEach(link => {
-      link.classList.remove('active');
-    });
-    document.querySelector(`.sidebar ul li a[onclick="loadSection('${section}')"]`).classList.add('active');
-  }
-  
-  function renderHome(container) {
-    container.innerHTML = `
-      <h2>Recommended Games</h2>
-      <div class="game-grid">
-        ${sampleGames.map(game => `
-          <div class="game-card" onclick="showGameDetail(${game.id})">
-            <img src="${game.image}" alt="${game.title}" />
+};
+
+// Utility Functions
+const Utils = {
+    showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        domCache.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }, 10);
+    },
+
+    debounce(func, delay) {
+        let timeoutId;
+        return function(...args) {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func.apply(this, args), delay);
+        };
+    },
+
+    createGameCard(game, showRemoveButton = false) {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.dataset.id = game.id;
+        
+        const stars = Array.from({ length: 5 }, (_, i) => 
+            `<i data-lucide="star" class="${i < Math.round(game.rating) ? 'filled' : ''}"></i>`
+        ).join('');
+        
+        card.innerHTML = `
+            <div class="game-image">
+                <img src="${game.image}" alt="${game.title}" loading="lazy">
+                ${showRemoveButton ? '<button class="remove-btn"><i data-lucide="x"></i></button>' : ''}
+            </div>
             <div class="game-info">
-              <h3>${game.title}</h3>
-              <p>${game.genre}</p>
-              <div class="game-rating">
-                ${'★'.repeat(Math.floor(game.rating))}${'☆'.repeat(5 - Math.floor(game.rating))}
-                (${game.rating.toFixed(1)})
-              </div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-  
-  function renderYourGames(container) {
-    container.innerHTML = `
-      <h2>Your Game Library</h2>
-      ${sampleGames.length > 0 ? `
-        <div class="game-grid">
-          ${sampleGames.map(game => `
-            <div class="game-card">
-              <img src="${game.image}" alt="${game.title}" />
-              <div class="game-info">
                 <h3>${game.title}</h3>
-                <button class="remove-btn" onclick="removeGame(${game.id}, event)">Remove</button>
-              </div>
+                <p class="game-genre">${game.genre}</p>
+                <div class="rating-stars">
+                    ${stars}
+                    <span>(${game.rating.toFixed(1)})</span>
+                </div>
             </div>
-          `).join('')}
-        </div>
-      ` : `
-        <div class="empty-state">
-          <i class="fas fa-gamepad"></i>
-          <p>You haven't added any games yet!</p>
-          <button onclick="showAddGames()">Browse Games</button>
-        </div>
-      `}
-    `;
-  }
-  
-  function renderCollections(container) {
-    container.innerHTML = `
-      <h2>Your Collections</h2>
-      <div class="search-container">
-        <input type="text" placeholder="Collection name" id="collection-name">
-        <button onclick="createCollection()">Create Collection</button>
-      </div>
-      <div id="collections-list">
-        ${collections.length > 0 ? collections.map(collection => `
-          <div class="collection-item">
-            <i class="fas fa-folder"></i>
-            <div>
-              <h3>${collection.name}</h3>
-              <p>${collection.games.length} games</p>
-            </div>
-            <button class="delete-btn" onclick="deleteCollection(${collection.id}, event)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        `).join('') : `
-          <p>No collections yet. Create your first one!</p>
-        `}
-      </div>
-    `;
-  }
-  
-  function renderReviews(container) {
-    container.innerHTML = `
-      <h2>Search Game Reviews</h2>
-      <div class="search-container">
-        <input type="text" id="review-search" placeholder="Enter game name">
-        <button onclick="searchReviews()">Search Reviews</button>
-      </div>
-      <div id="review-results" class="review-results"></div>
-    `;
-  }
-  
-  function renderFriends(container) {
-    container.innerHTML = `
-      <h2>Your Friends</h2>
-      <div class="friends-list">
-        <p>Friend functionality coming soon!</p>
-      </div>
-    `;
-  }
-  
-  function renderSettings(container) {
-    container.innerHTML = `
-      <h2>Settings</h2>
-      <div class="settings-form">
-        <div class="setting-item">
-          <label>Theme</label>
-          <select>
-            <option>Dark</option>
-            <option>Light</option>
-          </select>
-        </div>
-        <div class="setting-item">
-          <label>Notifications</label>
-          <input type="checkbox" checked>
-        </div>
-        <button class="save-btn">Save Settings</button>
-      </div>
-    `;
-  }
-  
-  function createCollection() {
-    const name = document.getElementById("collection-name").value.trim();
-    if (name) {
-      const newCollection = {
-        id: collections.length + 1,
-        name: name,
-        games: []
-      };
-      collections.push(newCollection);
-      renderCollections(document.getElementById("main-section"));
+        `;
+        
+        return card;
     }
-  }
-  
-  function deleteCollection(id, event) {
-    event.stopPropagation();
-    collections = collections.filter(collection => collection.id !== id);
-    renderCollections(document.getElementById("main-section"));
-  }
-  
-  function searchReviews() {
-    const query = document.getElementById("review-search").value.trim();
-    const resultDiv = document.getElementById("review-results");
+};
+
+// Page Specific Modules
+const PageModules = {
+    home: {
+        init() {
+            const games = [
+                {
+                    id: 1,
+                    title: "The Witcher 3",
+                    genre: "RPG",
+                    rating: 4.9,
+                    image: "https://via.placeholder.com/300x200?text=The+Witcher+3"
+                }
+                // More game data...
+            ];
+            
+            const featuredGamesContainer = document.querySelector('.game-grid');
+            if (featuredGamesContainer) {
+                games.slice(0, 3).forEach(game => {
+                    featuredGamesContainer.appendChild(Utils.createGameCard(game));
+                });
+            }
+        }
+    },
+
+    myGames: {
+        init() {
+            const searchInput = document.querySelector('.search-container input');
+            const gameGrid = document.querySelector('.game-grid');
+            const emptyState = document.querySelector('.empty-state');
+            
+            const myGames = [
+                {
+                    id: 1,
+                    title: "The Witcher 3",
+                    genre: "RPG",
+                    rating: 4.9,
+                    image: "https://via.placeholder.com/300x200?text=The+Witcher+3"
+                }
+                // More game data...
+            ];
+            
+            // Initial render
+            this.renderGames(myGames, gameGrid, emptyState);
+            
+            // Search with debounce
+            searchInput?.addEventListener('input', Utils.debounce(() => {
+                const query = searchInput.value.toLowerCase();
+                const filteredGames = myGames.filter(game => 
+                    game.title.toLowerCase().includes(query) || 
+                    game.genre.toLowerCase().includes(query)
+                );
+                this.renderGames(filteredGames, gameGrid, emptyState);
+            }, 300));
+            
+            // Remove game
+            gameGrid?.addEventListener('click', (e) => {
+                if (e.target.closest('.remove-btn')) {
+                    e.target.closest('.game-card').remove();
+                    Utils.showToast('Game removed from your library');
+                    if (gameGrid.children.length === 0) {
+                        emptyState.style.display = 'block';
+                    }
+                }
+            });
+        },
+        
+        renderGames(games, container, emptyState) {
+            container.innerHTML = '';
+            if (games.length > 0) {
+                games.forEach(game => container.appendChild(Utils.createGameCard(game, true)));
+                emptyState.style.display = 'none';
+            } else {
+                emptyState.style.display = 'block';
+            }
+        }
+    },
+
+    reviews: {
+        init() {
+            const searchForm = document.querySelector('.search-form');
+            const reviewSitesContainer = document.querySelector('.review-sites');
+            const emptyState = document.querySelector('.empty-state');
+            
+            const reviewSites = [
+                {
+                    name: "Metacritic",
+                    logo: "https://via.placeholder.com/100?text=Metacritic",
+                    searchUrl: "https://www.metacritic.com/search/all/{query}/results"
+                }
+                // More review site data...
+            ];
+            
+            searchForm?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const query = searchForm.querySelector('input').value.trim();
+                
+                if (query) {
+                    reviewSitesContainer.innerHTML = reviewSites.map(site => `
+                        <div class="review-site-card">
+                            <div class="site-logo">
+                                <img src="${site.logo}" alt="${site.name}" loading="lazy">
+                            </div>
+                            <h3>${site.name}</h3>
+                            <p>View ${query} reviews on ${site.name}</p>
+                            <a href="${site.searchUrl.replace('{query}', encodeURIComponent(query))}" 
+                               target="_blank" class="site-link">
+                                Visit site <i data-lucide="external-link"></i>
+                            </a>
+                        </div>
+                    `).join('');
+                    
+                    emptyState.style.display = 'none';
+                    reviewSitesContainer.style.display = 'grid';
+                    lucide.createIcons();
+                }
+            });
+        }
+    },
+
+    settings: {
+        init() {
+            const saveBtn = document.querySelector('.save-btn');
+            saveBtn?.addEventListener('click', () => {
+                Utils.showToast('Settings saved successfully');
+            });
+        }
+    },
+
+    modal: {
+        init() {
+            const modal = document.getElementById('addGameModal');
+            if (!modal) return;
+            
+            const showModal = () => {
+                modal.style.display = 'flex';
+                domCache.body.style.overflow = 'hidden';
+            };
+            
+            const hideModal = () => {
+                modal.style.display = 'none';
+                domCache.body.style.overflow = 'auto';
+            };
+            
+            // Event listeners
+            document.getElementById('addGameBtn')?.addEventListener('click', showModal);
+            document.getElementById('addGameBtnEmpty')?.addEventListener('click', showModal);
+            document.getElementById('closeModalBtn')?.addEventListener('click', hideModal);
+            
+            modal.addEventListener('click', (e) => e.target === modal && hideModal());
+            
+            // Star rating
+            const stars = document.querySelectorAll('.star');
+            const ratingInput = document.getElementById('gameRating');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = parseInt(star.getAttribute('data-value'));
+                    ratingInput.value = value;
+                    stars.forEach((s, i) => s.classList.toggle('active', i < value));
+                });
+            });
+            
+            document.getElementById('addGameForm')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const title = document.getElementById('gameTitle').value;
+                const genre = document.getElementById('gameGenre').value;
+                const imageUrl = document.getElementById('gameImage').value || 
+                    `https://via.placeholder.com/300x200?text=${encodeURIComponent(title)}`;
+                const rating = parseInt(ratingInput.value) || 0;
+                const gameGrid = document.querySelector('.game-grid');
+                const emptyState = document.querySelector('.empty-state');
+                
+                const gameCard = Utils.createGameCard({
+                    id: Date.now(),
+                    title,
+                    genre,
+                    rating,
+                    image: imageUrl
+                }, true);
+                
+                gameGrid.appendChild(gameCard);
+                lucide.createIcons();
+                emptyState.style.display = 'none';
+                
+                e.target.reset();
+                ratingInput.value = 0;
+                stars.forEach(star => star.classList.remove('active'));
+                hideModal();
+            });
+        }
+    }
+};
+document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
     
-    if (!query) {
-      resultDiv.innerHTML = "<p>Please enter a game name.</p>";
-      return;
-    }
-  
-    resultDiv.innerHTML = `
-      <div class="review-sources">
-        <h3>Reviews for <strong>${query}</strong></h3>
-        <div class="sources-grid">
-          <a href="https://www.metacritic.com/search/all/${query}/results" target="_blank" class="source-card">
-            <img src="https://via.placeholder.com/100?text=Metacritic" alt="Metacritic">
-            <span>Metacritic</span>
-          </a>
-          <a href="https://www.ign.com/search?q=${query}" target="_blank" class="source-card">
-            <img src="https://via.placeholder.com/100?text=IGN" alt="IGN">
-            <span>IGN</span>
-          </a>
-          <a href="https://www.gamespot.com/search/?q=${query}" target="_blank" class="source-card">
-            <img src="https://via.placeholder.com/100?text=GameSpot" alt="GameSpot">
-            <span>GameSpot</span>
-          </a>
-        </div>
-      </div>
-    `;
-  }
-  
-  function showGameDetail(gameId) {
-    const game = sampleGames.find(g => g.id === gameId);
-    if (game) {
-      document.getElementById("main-section").innerHTML = `
-        <div class="game-detail">
-          <button class="back-btn" onclick="loadSection('home')">
-            <i class="fas fa-arrow-left"></i> Back
-          </button>
-          <div class="detail-header">
-            <img src="${game.image}" alt="${game.title}" class="detail-image">
-            <div class="detail-info">
-              <h1>${game.title}</h1>
-              <div class="meta-info">
-                <span class="genre">${game.genre}</span>
-                <span class="rating">
-                  ${'★'.repeat(Math.floor(game.rating))}${'☆'.repeat(5 - Math.floor(game.rating))}
-                  (${game.rating.toFixed(1)})
-                </span>
-              </div>
-              <div class="action-buttons">
-                <button class="add-btn">
-                  <i class="fas fa-plus"></i> Add to Library
-                </button>
-                <button class="wishlist-btn">
-                  <i class="fas fa-heart"></i> Wishlist
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="detail-content">
-            <h2>About the Game</h2>
-            <p>This is where detailed information about ${game.title} would appear. In a real application, this would be fetched from a game database API with complete description, screenshots, videos, and more details about the game.</p>
-            <div class="screenshots">
-              <h3>Screenshots</h3>
-              <div class="screenshot-grid">
-                <img src="https://via.placeholder.com/300x200?text=Screenshot+1">
-                <img src="https://via.placeholder.com/300x200?text=Screenshot+2">
-                <img src="https://via.placeholder.com/300x200?text=Screenshot+3">
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-  }
-  
-  // Initialize with home section
-  document.addEventListener("DOMContentLoaded", () => {
-    loadSection("home");
-  });
+    ThemeManager.init();
+    
+    if (document.querySelector('.game-grid')) PageModules.home.init();
+    if (document.querySelector('.my-games-page')) PageModules.myGames.init();
+    if (document.querySelector('.review-container')) PageModules.reviews.init();
+    if (document.querySelector('.settings-container')) PageModules.settings.init();
+    if (document.getElementById('addGameModal')) PageModules.modal.init();
+});

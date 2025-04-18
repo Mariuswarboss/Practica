@@ -303,3 +303,36 @@
     opacity: 0;
   }
 }
+.header-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #4a76a8;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #3a5f8a;
+}
+
+/* For light mode */
+.light-mode .back-button {
+  background-color: #5a8fbb;
+  color: white;
+}
+
+.light-mode .back-button:hover {
+  background-color: #4a7ba6;
+}

@@ -4,41 +4,42 @@ const loginBtn = document.getElementById('login-btn');
 const pwToggle = document.querySelector(".icon-right");
 const pwField = document.querySelector(".password");
 
+// Password visibility toggle
 pwToggle.addEventListener("click", () => {
-  if (pwField.type === "password") {
-    pwField.type = "text";
-    pwToggle.textContent = "visibility";
-  } else {
-    pwField.type = "password";
-    pwToggle.textContent = "visibility_off";
-  }
+  pwField.type = pwField.type === "password" ? "text" : "password";
+  pwToggle.textContent = pwField.type === "password" ? "visibility_off" : "visibility";
 });
 
+// Login function
 loginBtn.addEventListener("click", () => {
-  let email = loginEmail.value.trim();
-  let password = loginPassword.value.trim();
-  let errors = [];
+  const email = loginEmail.value.trim();
+  const password = loginPassword.value.trim();
+  const errors = [];
 
-  if (!email.includes("@")) {
-    errors.push("Email must contain '@'");
-    loginEmail.parentElement.classList.add("incorrect");
-  } else {
-    loginEmail.parentElement.classList.remove("incorrect");
-  }
+  // Validation
+  if (!email.includes("@")) errors.push("Valid email required");
+  if (!password) errors.push("Password required");
 
-  if (password.length === 0) {
-    errors.push("Password is required");
-    loginPassword.parentElement.classList.add("incorrect");
-  } else {
-    loginPassword.parentElement.classList.remove("incorrect");
-  }
+  // Highlight errors
+  [loginEmail, loginPassword].forEach(input => {
+    input.parentElement.classList.toggle("incorrect", 
+      errors.some(err => err.toLowerCase().includes(input.id.split('-')[1])));
+  });
 
-  if (errors.length > 0) {
+  if (errors.length) {
     alert(errors.join("\n"));
-  } else {
-    alert("Login successful!");
-    localStorage.setItem("isLoggedIn", "true"); // salvăm autentificarea
-    window.location.href = "../index.html"; // redirect spre pagina principală
+    return;
   }
-  
+
+  // Check credentials
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+  const user = users.find(u => u.email === email && u.password === password);
+
+  if (user) {
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    window.location.href = "/index.html";
+  } else {
+    alert("Invalid credentials. Please try again.");
+  }
 });

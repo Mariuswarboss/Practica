@@ -1,0 +1,245 @@
+/* Light Theme (default) */
+:root,
+[data-theme="light"] {
+    --clr-primary: #4070f4;
+    --clr-primary-variant: #2759e8;
+    --clr-secondary: #6c757d;
+    --clr-success: #28a745;
+    --clr-danger: #dc3545;
+    --clr-warning: #ffc107;
+    --clr-info: #17a2b8;
+    --clr-info-dark: #6B7280;
+    
+    /* Background Colors */
+    --clr-background: #f6f6f9;
+    --clr-card-bg: #ffffff;
+    --clr-sidebar-bg: #ffffff;
+    --clr-navbar-bg: #ffffff;
+    --clr-input-bg: #ffffff;
+    --clr-hover: #f0f0f5;
+    
+    /* Text Colors */
+    --clr-text: #2d3748;
+    --clr-text-light: #718096;
+    --clr-heading: #1a202c;
+    
+    /* Border Colors */
+    --clr-border: #e2e8f0;
+    --clr-border-light: #edf2f7;
+    
+    /* Shadow */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --clr-primary: #4070f4;
+    --clr-primary-variant: #2759e8;
+    --clr-secondary: #6c757d;
+    --clr-success: #2ea043;
+    --clr-danger: #f85149;
+    --clr-warning: #d29922;
+    --clr-info: #58a6ff;
+    --clr-info-dark: #8b949e;
+    
+    /* Background Colors */
+    --clr-background: #0d1117;
+    --clr-card-bg: #161b22;
+    --clr-sidebar-bg: #161b22;
+    --clr-navbar-bg: #161b22;
+    --clr-input-bg: #21262d;
+    --clr-hover: #1c2128;
+    
+    /* Text Colors */
+    --clr-text: #c9d1d9;
+    --clr-text-light: #8b949e;
+    --clr-heading: #e6edf3;
+    
+    /* Border Colors */
+    --clr-border: #30363d;
+    --clr-border-light: #21262d;
+    
+    /* Shadow */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth transitions for theme changes */
+* {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+/* Base styles that use theme variables */
+body {
+    background-color: var(--clr-background);
+    color: var(--clr-text);
+}
+
+/* Card styles */
+.card {
+    background-color: var(--clr-card-bg);
+    border: 1px solid var(--clr-border);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Input styles */
+input, select, textarea {
+    background-color: var(--clr-input-bg);
+    border: 1px solid var(--clr-border);
+    color: var(--clr-text);
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--clr-primary);
+    box-shadow: 0 0 0 2px var(--clr-primary-variant);
+}
+
+/* Button styles */
+.btn-primary {
+    background-color: var(--clr-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--clr-primary-variant);
+}
+
+.btn-secondary {
+    background-color: var(--clr-background);
+    color: var(--clr-text);
+    border: 1px solid var(--clr-border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--clr-hover);
+}
+
+/* Link styles */
+a {
+    color: var(--clr-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--clr-primary-variant);
+}
+
+/* Heading styles */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--clr-heading);
+}
+
+/* Border utilities */
+.border {
+    border: 1px solid var(--clr-border);
+}
+
+.border-light {
+    border: 1px solid var(--clr-border-light);
+}
+
+/* Text utilities */
+.text-primary { color: var(--clr-primary); }
+.text-secondary { color: var(--clr-secondary); }
+.text-success { color: var(--clr-success); }
+.text-danger { color: var(--clr-danger); }
+.text-warning { color: var(--clr-warning); }
+.text-info { color: var(--clr-info); }
+.text-light { color: var(--clr-text-light); }
+
+/* Background utilities */
+.bg-primary { background-color: var(--clr-primary); }
+.bg-secondary { background-color: var(--clr-secondary); }
+.bg-success { background-color: var(--clr-success); }
+.bg-danger { background-color: var(--clr-danger); }
+.bg-warning { background-color: var(--clr-warning); }
+.bg-info { background-color: var(--clr-info); }
+.bg-card { background-color: var(--clr-card-bg); }
+
+/* Shadow utilities */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* Sidebar styles */
+#sidebar {
+    background-color: var(--clr-sidebar-bg);
+    border-right: 1px solid var(--clr-border);
+    box-shadow: 2px 0 4px var(--clr-shadow);
+}
+
+.nav-link {
+    color: var(--clr-text) !important;
+}
+
+.nav-link:hover {
+    background-color: var(--clr-hover) !important;
+}
+
+.nav-link.active {
+    background-color: var(--clr-light) !important;
+    color: var(--clr-primary) !important;
+}
+
+/* Navbar styles */
+#navbar {
+    background-color: var(--clr-navbar-bg);
+    border-bottom: 1px solid var(--clr-border);
+    box-shadow: 0 2px 4px var(--clr-shadow);
+}
+
+/* Content styles */
+.content-container {
+    background-color: var(--clr-card-bg);
+    box-shadow: 0 2px 4px var(--clr-shadow);
+}
+
+/* Text styles */
+p {
+    color: var(--clr-text-muted);
+}
+
+/* Dark theme specific adjustments */
+[data-theme="dark"] {
+    /* Reduce harsh contrast for images */
+    img {
+        opacity: 0.9;
+    }
+    
+    /* Increase text contrast for better readability */
+    p {
+        color: var(--clr-text-muted);
+    }
+    
+    /* Add subtle glow to primary elements */
+    .nav-link.active {
+        box-shadow: 0 0 8px var(--clr-primary);
+    }
+    
+    /* Adjust input fields */
+    input, select, textarea {
+        background-color: var(--clr-input-bg);
+        border-color: var(--clr-border);
+    }
+    
+    /* Enhance button visibility */
+    button:not(.theme-toggle-btn) {
+        box-shadow: 0 2px 4px var(--clr-shadow);
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease;
+} 

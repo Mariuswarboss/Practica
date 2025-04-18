@@ -1,55 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Game Library</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\Main_conten\main.css">
-  <link rel="stylesheet" href="C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\navbar\navbar.css">
-  <link rel="stylesheet" href="C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\meniu\meniu.css">
-  <link rel="stylesheet" href="C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\Main_conten\main.css">
-</head>
-<body style="margin: 0; font-family: 'Inter', sans-serif;">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="Main_conten/theme.css" type="text/css">
+  <link rel="stylesheet" href="Main_conten/main.css" type="text/css">
+  <link rel="stylesheet" href="navbar/navbar.css" type="text/css">
+  <link rel="stylesheet" href="meniu/meniu.css" type="text/css">
+  <link rel="stylesheet" href="footer/footer.css" type="text/css">
 
   <script>
-    if (!localStorage.getItem("isLoggedIn")) {
-      window.location.href = "./auth/login.html";
-    }
+    // Initialize theme before DOM loads to prevent flash
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
   </script>
 
-  <div id="navbar"></div>
-  <div class="content-wrapper">
-    <div id="meniu"></div>
-    <div id="main-content"></div>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--clr-background, #f6f6f9);
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex: 1 0 auto;
+      position: relative;
+      margin-top: 60px; /* Space for fixed navbar */
+    }
+
+    #main-content {
+      flex: 1;
+      padding: 20px;
+      box-sizing: border-box;
+      margin-left: 0;
+      transition: all 0.3s ease;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Content Container for centering */
+    .content-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-section h1 {
+      font-size: 2.5rem;
+      color: var(--clr-dark);
+      margin-bottom: 1rem;
+    }
+
+    .hero-section p {
+      font-size: 1.2rem;
+      color: var(--clr-dark-variant);
+      margin-bottom: 2rem;
+    }
+
+    /* Featured Games Section */
+    .featured-games {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .featured-games h2 {
+      font-size: 1.8rem;
+      color: var(--clr-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Page Overlay */
+    .page-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 998;
+    }
+
+    .menu-open .page-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (min-width: 1200px) {
+      #main-content {
+        margin-left: 14rem; /* Space for sidebar */
+      }
+      
+      .page-overlay {
+        display: none;
+      }
+    }
+
+    /* Global Menu Button */
+    #global-menu-btn {
+      position: fixed;
+      left: 1.4rem;
+      top: 1.4rem;
+      background: var(--clr-primary);
+      color: white;
+      border-radius: 50%;
+      width: 2.4rem;
+      height: 2.4rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1001;
+      border: none;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    #global-menu-btn:hover {
+      background: var(--clr-primary-variant);
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 1199px) {
+      #global-menu-btn {
+        display: flex;
+      }
+      
+      #main-content {
+        padding: 1rem;
+      }
+      
+      .content-container {
+        padding: 1rem;
+      }
+    }
+
+    /* Menu Toggle Button Styles */
+    #menu-toggle {
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      z-index: 1001;
+      background: var(--clr-primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+    }
+
+    #menu-toggle:hover {
+      background: var(--clr-primary-variant);
+      transform: scale(1.1);
+    }
+
+    #menu-toggle i {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    #menu-toggle.active i {
+      transform: rotate(180deg);
+    }
+
+    @media (min-width: 1200px) {
+      #menu-toggle {
+        display: none;
+      }
+    }
+  </style>
+
+  <script>
+    // Global menu state management
+    window.menuState = {
+      isOpen: window.innerWidth >= 1200,
+      toggle: function() {
+        this.isOpen = !this.isOpen;
+        document.body.classList.toggle('menu-open', this.isOpen);
+        document.dispatchEvent(new CustomEvent('menuStateChange', { detail: { isOpen: this.isOpen } }));
+      },
+      close: function() {
+        this.isOpen = false;
+        document.body.classList.remove('menu-open');
+        document.dispatchEvent(new CustomEvent('menuStateChange', { detail: { isOpen: false } }));
+      },
+      open: function() {
+        this.isOpen = true;
+        document.body.classList.add('menu-open');
+        document.dispatchEvent(new CustomEvent('menuStateChange', { detail: { isOpen: true } }));
+      }
+    };
+
+    window.loadPage = function(page) {
+      let pagePath;
+      switch (page) {
+        case 'main': pagePath = '/Main_conten/main.html'; break;
+        case 'my_games': pagePath = '/Main_conten/my_game.html'; break;
+        case 'reviews': pagePath = '/Main_conten/reviews.html'; break;
+        case 'settings': pagePath = '/Main_conten/Settings.html'; break;
+        case 'notifications': pagePath = '/Main_conten/Notifications.html'; break;
+        case 'collections': pagePath = '/Main_conten/Collections.html'; break;
+        default: pagePath = '/Main_conten/main.html';
+      }
+
+      fetch(pagePath)
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to load page');
+          return response.text();
+        })
+        .then(html => {
+          const mainContent = document.getElementById('main-content');
+          mainContent.innerHTML = `
+            <div class="content-container">
+              ${html}
+            </div>
+          `;
+          
+          // Load the corresponding JavaScript file
+          const scriptPath = pagePath.replace('.html', '.js');
+          const existingScript = document.querySelector(`script[src="${scriptPath}"]`);
+          if (!existingScript) {
+            const script = document.createElement('script');
+            script.src = scriptPath;
+            script.type = 'text/javascript';
+            script.defer = true;
+            document.body.appendChild(script);
+          }
+          document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('onclick').includes(page)) {
+              link.classList.add('active');
+            }
+          });
+          if (window.innerWidth < 1200) {
+            window.menuState.close();
+          }
+        })
+        .catch(error => {
+          console.error('Error loading page:', error);
+          document.getElementById('main-content').innerHTML = `
+            <div class="error">Error loading page</div>
+          `;
+        });
+    };
+
+    // Check authentication
+    document.addEventListener('DOMContentLoaded', () => {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      if (!isLoggedIn || isLoggedIn !== "true") {
+        window.location.href = "/auth/login.html";
+        return;
+      }
+
+      // Initialize page
+      loadPage('main');
+    });
+  </script>
+</head>
+<body data-theme="light">
+  <!-- Menu Toggle Button -->
+  <button id="menu-toggle">
+    <i class='bx bx-menu'></i>
+  </button>
+
+  <!-- Page overlay for mobile menu -->
+  <div class="page-overlay"></div>
+
+  <!-- Main layout wrapper -->
+  <div class="layout-wrapper">
+    <!-- Navigation components -->
+    <div id="navbar-container"></div>
+    <div id="sidebar-container"></div>
+
+    <!-- Main content area -->
+    <main class="content-wrapper">
+      <div id="main-content"></div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
   </div>
-  <div id="footer"></div>
+
+  <!-- Menu Button for Mobile -->
+  <button id="global-menu-btn" class="show">
+    <i class='bx bx-menu'></i>
+  </button>
 
   <script>
     async function loadComponent(id, url, scriptPath = null) {
       try {
         const res = await fetch(url);
-        if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
-        const html = await res.text();
-        document.getElementById(id).innerHTML = html;
-
+        if (!res.ok) throw new Error(`Failed to load ${url}`);
+        const content = await res.text();
+        document.getElementById(id).innerHTML = content;
         if (scriptPath) {
-          const script = document.createElement('script');
-          script.src = scriptPath;
-          document.body.appendChild(script);
+          const existingScript = document.querySelector(`script[src="${scriptPath}"]`);
+          if (!existingScript) {
+            const script = document.createElement('script');
+            script.src = scriptPath;
+            script.type = 'text/javascript';
+            document.body.appendChild(script);
+          }
         }
       } catch (error) {
         console.error(error);
-        document.getElementById(id).innerHTML = `<div class="error">Error loading ${id} component</div>`;
+        document.getElementById(id).innerHTML = `<div class="error">Error loading ${id}</div>`;
       }
     }
 
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Initialize theme
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.body.setAttribute('data-theme', savedTheme);
+
+      // Listen for theme changes
+      document.addEventListener('themeChange', (event) => {
+        const newTheme = event.detail.theme;
+        document.documentElement.setAttribute('data-theme', newTheme);
+        document.body.setAttribute('data-theme', newTheme);
+      });
+
+      await loadComponent("navbar", "/navbar/navbar.html", "/navbar/navbar.js");
+      await loadComponent("meniu", "/meniu/meniu.html", "../meniu/meniu.js");
+      await loadComponent("main-content", "/Main_conten/main.html", "../Main_conten/main.js");
+      await loadComponent("footer", "/footer/footer.html", "/footer/footer.js");
+      
+      // Handle menu state changes
+      document.addEventListener('menuStateChange', (event) => {
+        const isOpen = event.detail.isOpen;
+        const globalMenuBtn = document.getElementById('global-menu-btn');
+        globalMenuBtn.classList.toggle('show', !isOpen);
+        if (window.innerWidth < 1200) {
+          document.getElementById('main-content').style.marginLeft = isOpen ? '16rem' : '0';
+        }
+      });
+    });
+  </script>
+
+  <!-- Core scripts -->
+  <script src="app.js"></script>
+  <script>
+    // Menu toggle functionality
     document.addEventListener('DOMContentLoaded', () => {
-      loadComponent("navbar", "../navbar/navbar.html", "..navbar/navbar.js");
-      loadComponent("meniu", "C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\meniu\meniu.html", "C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\meniu\meniu.js");
-      loadComponent("main-content", "C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\Main_conten\main.html", "C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\Main_conten\main.js");
-      loadComponent("footer", "C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\footer\footer.html", "C:\Users\mariu\OneDrive\Рабочий стол\Practica\Practica\footer\footer.js");
+      const menuToggle = document.getElementById('menu-toggle');
+      const pageOverlay = document.querySelector('.page-overlay');
+
+      function toggleMenu() {
+        window.menuState.toggle();
+        menuToggle.classList.toggle('active');
+      }
+
+      menuToggle.addEventListener('click', toggleMenu);
+      pageOverlay.addEventListener('click', () => {
+        window.menuState.close();
+        menuToggle.classList.remove('active');
+      });
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1200) {
+          window.menuState.open();
+          menuToggle.classList.remove('active');
+        } else if (!window.menuState.isOpen) {
+          window.menuState.close();
+        }
+      });
+
+      // Load initial page content
+      const currentPath = window.location.pathname;
+      let initialPage = 'Main_conten/Home.html';
+
+      // Map paths to content
+      switch(currentPath) {
+        case '/my_games':
+          initialPage = 'Main_conten/my_games.html';
+          break;
+        case '/settings':
+          initialPage = 'Main_conten/Settings.html';
+          break;
+      }
+
+      // Load the initial page
+      fetch(initialPage)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('main-content').innerHTML = html;
+          // Load page specific script if needed
+          if (initialPage.includes('my_games')) {
+            const script = document.createElement('script');
+            script.src = 'Main_conten/my_game.js';
+            document.body.appendChild(script);
+          }
+        })
+        .catch(error => {
+          console.error('Error loading page:', error);
+          document.getElementById('main-content').innerHTML = '<div class="error">Error loading page content</div>';
+        });
     });
   </script>
 </body>

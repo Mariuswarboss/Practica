@@ -1,101 +1,126 @@
+/* navbar.css */
 .navbar {
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  background: linear-gradient(135deg, #4070f4 0%, #4070f4 100%);
-  padding: 10px 30px;
-  color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
-  left: 0cm;
-  width: 100%;
-  
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1000;
+  background-color: var(--clr-navbar-bg);
+  box-shadow: var(--shadow-md);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.navbar-left, .navbar-right {
+.navbar-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 2rem;
 }
 
 .logo {
-  font-size: 1.8em;
+  font-size: 1.5rem;
   font-weight: bold;
-  background: linear-gradient(to right, #214071, #9cb2eb);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--clr-text);
+  margin-left: 3rem; /* Add space for menu button */
 }
 
 .user-menu {
   display: flex;
   align-items: center;
-  gap: 10px;
-  cursor: pointer;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 2rem;
+  transition: background-color 0.2s ease;
+}
+
+.user-menu:hover {
+  background-color: var(--clr-hover);
 }
 
 .user-avatar {
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #3b82f6;
+}
+
+.username {
+  color: var(--clr-text);
+  font-weight: 500;
 }
 
 .search-bar {
-  flex: 0.6;
-  display: flex;
+  flex: 1;
   max-width: 500px;
+  margin: 0 2rem;
+  display: flex;
+  position: relative;
 }
 
 .search-bar input {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 25px 0 0 25px;
   width: 100%;
-  font-size: 0.9em;
-  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  padding-left: 2.5rem;
+  border: 1px solid var(--clr-border);
+  border-radius: 2rem;
+  background-color: var(--clr-input-bg);
+  color: var(--clr-text);
 }
 
 .search-bar button {
-  background: linear-gradient(to right, #3b82f6, #6366f1);
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  padding: 8px 20px;
-  border-radius: 0 25px 25px 0;
-  color: white;
+  color: var(--clr-text-light);
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.search-bar button:hover {
-  opacity: 0.9;
-}
-
-.profile-btn, .logout-btn {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 8px 15px;
-  border-radius: 25px;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.navbar-right {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.9em;
+  gap: 1rem;
 }
 
-.profile-btn:hover, .logout-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.profile-btn i, .logout-btn i {
-  font-size: 0.9em;
-}
-.navbar-center {
+.profile-btn,
+.logout-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: none;
+  background-color: var(--clr-primary);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex: 2;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.profile-btn:hover,
+.logout-btn:hover {
+  background-color: var(--clr-primary-variant);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .logo {
+    margin-left: 2.5rem;
+  }
+
+  .search-bar {
+    margin: 0 1rem;
+  }
+
+  .username {
+    display: none;
+  }
 }

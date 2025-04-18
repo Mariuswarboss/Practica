@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="../meniu/meniu.css">
+    <link rel="stylesheet" href="../footer/footer.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <div id="sidebar-container"></div>
+
+    <div class="layout">
+        <main class="main-content">
+            <div class="my-games-container">
+                <div class="section-header">
+                    <h1>
+                        <i class='bx bx-game'></i>
+                        My Game Library
+                    </h1>
+                    <div class="actions">
+                        <div class="search-container">
+                            <i class='bx bx-search'></i>
+                            <input type="text" placeholder="Search your games..." id="searchGameInput">
+                        </div>
+                        <button class="add-game-btn" id="addGameBtn">
+                            <i class='bx bx-plus'></i>
+                            Add Game
+                        </button>
+                    </div>
+                </div>
+
+                <div class="game-grid" id="gameGrid">
+                    <!-- Game cards will be dynamically inserted here -->
+                </div>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <i class='bx bx-joystick bx-tada'></i>
+                    </div>
+                    <h2>Your game collection is empty</h2>
+                    <p>Start building your gaming legacy by adding your favorite games!</p>
+                    <button class="add-game-btn" id="addGameBtnEmpty">
+                        <i class='bx bx-plus'></i>
+                        Add Your First Game
+                    </button>
+                </div>
+
+                <!-- Add Game Modal -->
+                <div class="modal" id="addGameModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3><i class='bx bx-game-circle'></i> Add New Game</h3>
+                            <button class="close-modal" id="closeModalBtn">
+                                <i class='bx bx-x'></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addGameForm">
+                                <div class="form-group">
+                                    <label for="gameTitle">Game Title</label>
+                                    <input type="text" id="gameTitle" required placeholder="Enter game title">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="gameGenre">Primary Genre</label>
+                                        <select id="gameGenre" required>
+                                            <option value="">Select genre</option>
+                                            <option value="Action">Action</option>
+                                            <option value="Adventure">Adventure</option>
+                                            <option value="RPG">RPG</option>
+                                            <option value="Strategy">Strategy</option>
+                                            <option value="Sports">Sports</option>
+                                            <option value="Racing">Racing</option>
+                                            <option value="Simulation">Simulation</option>
+                                            <option value="Puzzle">Puzzle</option>
+                                            <option value="Horror">Horror</option>
+                                            <option value="Fighting">Fighting</option>
+                                            <option value="Platformer">Platformer</option>
+                                            <option value="Shooter">Shooter</option>
+                                            <option value="MMORPG">MMORPG</option>
+                                            <option value="Battle Royale">Battle Royale</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="gamePlatform">Platform</label>
+                                        <select id="gamePlatform" required>
+                                            <option value="">Select platform</option>
+                                            <option value="PC">PC</option>
+                                            <option value="PlayStation 5">PlayStation 5</option>
+                                            <option value="PlayStation 4">PlayStation 4</option>
+                                            <option value="Xbox Series X|S">Xbox Series X|S</option>
+                                            <option value="Xbox One">Xbox One</option>
+                                            <option value="Nintendo Switch">Nintendo Switch</option>
+                                            <option value="Mobile">Mobile</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gameImage">Game Cover Image</label>
+                                    <div class="image-upload">
+                                        <input type="text" id="gameImage" placeholder="Paste image URL">
+                                        <div class="image-preview" id="imagePreview"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="gameStatus">Play Status</label>
+                                        <select id="gameStatus" required>
+                                            <option value="">Select status</option>
+                                            <option value="Playing">Currently Playing</option>
+                                            <option value="Completed">Completed</option>
+                                            <option value="On Hold">On Hold</option>
+                                            <option value="Dropped">Dropped</option>
+                                            <option value="Plan to Play">Plan to Play</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="gameProgress">Progress</label>
+                                        <input type="number" id="gameProgress" min="0" max="100" placeholder="0-100%">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Your Rating</label>
+                                    <div class="rating-input">
+                                        <div class="stars">
+                                            <i class='bx bx-star star' data-value="1"></i>
+                                            <i class='bx bx-star star' data-value="2"></i>
+                                            <i class='bx bx-star star' data-value="3"></i>
+                                            <i class='bx bx-star star' data-value="4"></i>
+                                            <i class='bx bx-star star' data-value="5"></i>
+                                        </div>
+                                        <input type="hidden" id="gameRating" value="0">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gameNotes">Notes</label>
+                                    <textarea id="gameNotes" rows="3" placeholder="Add your thoughts about the game..."></textarea>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                                    <button type="submit" class="btn-primary">Add to Library</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script>
+        // Check authentication and load components
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn || isLoggedIn !== "true") {
+                window.location.href = "/auth/login.html";
+                return;
+            }
+
+            // Load navbar
+            fetch('../navbar/navbar.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('navbar-container').innerHTML = data;
+                    const navbarScript = document.createElement('script');
+                    navbarScript.src = '../navbar/navbar.js';
+                    document.body.appendChild(navbarScript);
+                })
+                .catch(err => console.error("Navbar failed to load:", err));
+
+            // Load sidebar
+            fetch('../meniu/meniu.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('sidebar-container').innerHTML = data;
+                    const menuScript = document.createElement('script');
+                    menuScript.src = '../meniu/meniu.js';
+                    document.body.appendChild(menuScript);
+                })
+                .catch(err => console.error("Sidebar failed to load:", err));
+
+            // Load footer
+            fetch('../footer/footer.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(err => console.error("Footer failed to load:", err));
+
+            // Initialize game functionality
+            const gameScript = document.createElement('script');
+            gameScript.src = 'my_game.js';
+            document.body.appendChild(gameScript);
+        });
+    </script>
+</body>
+</html>
+  
