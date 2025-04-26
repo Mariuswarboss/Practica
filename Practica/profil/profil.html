@@ -1,93 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Profile Card</title>
-  <link rel="stylesheet" href="profil.css">
-  <script src="https://kit.fontawesome.com/a2e0bf0a5f.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Marius Game Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../Main_conten/theme.css">
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="profil.css">
+    <link rel="stylesheet" href="../Main_conten/components.css">
+    <script>
+        // Initialize theme before DOM loads to prevent flash
+        const savedSettings = JSON.parse(localStorage.getItem('siteSettings') || '{}');
+        const theme = savedSettings.theme || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Apply accent color if set
+        if (savedSettings.accentColor) {
+            document.documentElement.style.setProperty('--clr-primary', savedSettings.accentColor);
+        }
+    </script>
+    <style>
+        .main-content {
+            margin-left: 0 !important;
+            margin-top: 60px;
+            padding: 2rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="profile-container">
-    <div class="header-buttons">
-      <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
-      <div class="toggle-container">
-        <label class="switch">
-          <input type="checkbox" id="modeToggle">
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
-    <div class="toggle-container">
-      <label class="switch">
-        <input type="checkbox" id="modeToggle">
-        <span class="slider round"></span>
-      </label>
+    <div id="navbar-container"></div>
+
+    <div class="layout">
+        <main class="main-content">
+            <div class="profile-container">
+                <div class="section-header">
+                    <h1>
+                        <i class='bx bx-user'></i>
+                        Profile
+                    </h1>
+                </div>
+
+                <div class="profile-content">
+                    <!-- Profile Header Card -->
+                    <div class="profile-card header-card">
+                        <div class="profile-avatar">
+                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" 
+                                 alt="User" class="avatar-image">
+                            <button class="edit-avatar">
+                                <i class='bx bx-camera'></i>
+                            </button>
+                        </div>
+                        <h2>User Profile</h2>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <i class='bx bx-game stat-icon'></i>
+                                <div class="stat-info">
+                                    <span class="stat-number">42</span>
+                                    <span class="stat-label">Games</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class='bx bx-collection stat-icon'></i>
+                                <div class="stat-info">
+                                    <span class="stat-number">7</span>
+                                    <span class="stat-label">Collections</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class='bx bx-time stat-icon'></i>
+                                <div class="stat-info">
+                                    <span class="stat-number">156</span>
+                                    <span class="stat-label">Hours</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About Me Card -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2><i class='bx bx-user'></i> About Me</h2>
+                            <button class="edit-btn" onclick="editField('bio-text')">
+                                <i class='bx bx-edit'></i>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <div id="bio-text" class="editable-field">
+                                <p>Passionate gamer and developer. Love RPGs and indie games!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements Card -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2><i class='bx bx-trophy'></i> Achievements</h2>
+                        </div>
+                        <div class="card-content">
+                            <div class="achievements-grid">
+                                <div class="achievement-item">
+                                    <i class='bx bx-medal gold'></i>
+                                    <div class="achievement-info">
+                                        <h3>Completed 10 Games</h3>
+                                        <p>Master Gamer</p>
+                                    </div>
+                                </div>
+                                <div class="achievement-item">
+                                    <i class='bx bx-medal silver'></i>
+                                    <div class="achievement-info">
+                                        <h3>100 Hours Played</h3>
+                                        <p>Dedicated Player</p>
+                                    </div>
+                                </div>
+                                <div class="achievement-item">
+                                    <i class='bx bx-medal bronze'></i>
+                                    <div class="achievement-info">
+                                        <h3>First Collection</h3>
+                                        <p>Collector</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Favorite Games Card -->
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2><i class='bx bx-game'></i> Favorite Games</h2>
+                            <button class="edit-btn" onclick="editField('fav-games-list')">
+                                <i class='bx bx-edit'></i>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <div id="fav-games-list" class="editable-field">
+                                <div class="game-list">
+                                    <div class="game-item">
+                                        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202211/0711/kh4MUIuMmHlxX9vQWs1DM8Wd.png" alt="The Witcher 3">
+                                        <div class="game-info">
+                                            <h3>The Witcher 3: Wild Hunt</h3>
+                                            <p>RPG • 100+ hours</p>
+                                        </div>
+                                    </div>
+                                    <div class="game-item">
+                                        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/phvVT0qZfcRms5qDAk0SI3CM.png" alt="Elden Ring">
+                                        <div class="game-info">
+                                            <h3>Elden Ring</h3>
+                                            <p>Action RPG • 80+ hours</p>
+                                        </div>
+                                    </div>
+                                    <div class="game-item">
+                                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg" alt="Cyberpunk 2077">
+                                        <div class="game-info">
+                                            <h3>Cyberpunk 2077</h3>
+                                            <p>Action RPG • 60+ hours</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="profile-header">
-      <div class="profile-avatar">
-        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="User" class="avatar-image user-avatar" width="150" height="130">
-        <button class="edit-avatar"><i class="fas fa-camera"></i></button>
-      </div>
-      <h1>User Profile</h1>
-      <div class="profile-stats">
-        <div class="stat-item">
-          <span class="stat-number">42</span>
-          <span class="stat-label">Games</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">7</span>
-          <span class="stat-label">Collections</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">156</span>
-          <span class="stat-label">Hours</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="profile-content">
-      <div class="profile-card">
-        <h2><i class="fas fa-user"></i> About Me</h2>
-        <div class="editable-field">
-          <p id="bio-text">Passionate gamer and developer. Love RPGs and indie games!</p>
-          <button class="edit-btn" onclick="editField('bio-text')"><i class="fas fa-edit"></i></button>
-        </div>
-      </div>
-
-      <div class="profile-card">
-        <h2><i class="fas fa-trophy"></i> Achievements</h2>
-        <div class="achievements-grid">
-          <div class="achievement-item">
-            <i class="fas fa-medal gold"></i>
-            <span>Completed 10 Games</span>
-          </div>
-          <div class="achievement-item">
-            <i class="fas fa-medal silver"></i>
-            <span>100 Hours Played</span>
-          </div>
-          <div class="achievement-item">
-            <i class="fas fa-medal bronze"></i>
-            <span>First Collection</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="profile-card">
-        <h2><i class="fas fa-gamepad"></i> Favorite Games</h2>
-        <div class="editable-field">
-          <ul id="fav-games-list">
-            <li>The Witcher 3: Wild Hunt</li>
-            <li>Cyberpunk 2077</li>
-            <li>Hollow Knight</li>
-            <li>Red Dead Redemption 2</li>
-            <li>Elden Ring</li>
-          </ul>
-          <button class="edit-btn" onclick="editField('fav-games-list')"><i class="fas fa-edit"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="profil.js"></script>
+    <!-- Scripts -->
+    <script src="../js/shared.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="profil.js"></script>
 </body>
 </html>

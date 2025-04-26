@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Marius Game Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../Main_conten/theme.css">
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="../footer/footer.css">
+    <link rel="stylesheet" href="components.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Initialize theme before DOM loads to prevent flash
+        const savedSettings = JSON.parse(localStorage.getItem('siteSettings') || '{}');
+        const theme = savedSettings.theme || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Apply accent color if set
+        if (savedSettings.accentColor) {
+            document.documentElement.style.setProperty('--clr-primary', savedSettings.accentColor);
+        }
+    </script>
+    <style>
+        /* Layout styles to ensure footer stays at bottom */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            margin-left: 0 !important;
+            margin-top: 60px;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        #footer-container {
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Menu button styles */
+        .menu-btn {
+            position: fixed;
+            left: 20px;
+            top: 15px;
+            z-index: 1001;
+            background: white;
+            color: var(--clr-primary);
+            border: 1px solid var(--clr-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-btn i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        .page-overlay {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .page-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        @media (min-width: 1200px) {
+            .menu-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <div id="sidebar-container"></div>
+
+    <div class="layout">
+        <main class="main-content">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>Discover your next gaming adventure</h1>
+                    <p>Track your games, discover new titles, and connect with friends in one place.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="window.location.href='my_game.html'">
+                            <i class='bx bx-plus'></i>
+                            Add Your First Game
+                        </button>
+                        <button class="btn-secondary" onclick="window.location.href='reviews.html'">
+                            <i class='bx bx-star'></i>
+                            Browse Reviews
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class='bx bx-time-five stat-icon'></i>
+                        <div class="stat-info">
+                            <h3>Total Hours Played</h3>
+                            <p class="stat-number">156</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class='bx bx-trophy stat-icon'></i>
+                        <div class="stat-info">
+                            <h3>Games Completed</h3>
+                            <p class="stat-number">12</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class='bx bx-game stat-icon'></i>
+                        <div class="stat-info">
+                            <h3>Games in Collection</h3>
+                            <p class="stat-number">42</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommended Games Section -->
+            <section class="section">
+                <h2 class="section-title">
+                    <i data-lucide="thumbs-up" class="icon gaming"></i> 
+                    Recommended For You
+                </h2>
+                <div class="recommendations-container">
+                    <!-- Based on Your Recent Plays -->
+                    <div class="recommendation-group">
+                        <h3>Based on Your Recent Plays</h3>
+                        <div class="game-grid">
+                            <div class="game-card">
+                                <div class="game-image">
+                                    <img src="https://www.datocms-assets.com/150395/1738856903-lies-of-p-pc-game-steam-cover.jpg?auto=format&fit=max&w=1200" alt="Lies of P">
+                                    <div class="recommendation-tag">Similar to Dark Souls</div>
+                                </div>
+                                <div class="game-info">
+                                    <h3>Lies of P</h3>
+                                    <p class="game-genre">Action/RPG</p>
+                                    <div class="rating-stars">
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="half-filled"></i>
+                                        <span>(4.2)</span>
+                                    </div>
+                                    <p class="game-hours">Average Time: 35h</p>
+                                </div>
+                            </div>
+
+                            <div class="game-card">
+                                <div class="game-image">
+                                    <img src="https://i.ytimg.com/vi/sbW1HEtgip4/maxresdefault.jpg" alt="Lords of the Fallen">
+                                    <div class="recommendation-tag">Similar to Elden Ring</div>
+                                </div>
+                                <div class="game-info">
+                                    <h3>Lords of the Fallen</h3>
+                                    <p class="game-genre">Action/RPG</p>
+                                    <div class="rating-stars">
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star"></i>
+                                        <span>(4.0)</span>
+                                    </div>
+                                    <p class="game-hours">Average Time: 30h</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Popular in Your Favorite Genres -->
+                    <div class="recommendation-group">
+                        <h3>Popular in RPG Games</h3>
+                        <div class="game-grid">
+                            <div class="game-card">
+                                <div class="game-image">
+                                    <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2161700/header.jpg?t=1744328458" alt="Persona 3 Reload">
+                                    <div class="recommendation-tag">New Release</div>
+                                </div>
+                                <div class="game-info">
+                                    <h3>Persona 3 Reload</h3>
+                                    <p class="game-genre">JRPG</p>
+                                    <div class="rating-stars">
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <span>(4.9)</span>
+                                    </div>
+                                    <p class="game-hours">Average Time: 70h</p>
+                                </div>
+                            </div>
+
+                            <div class="game-card">
+                                <div class="game-image">
+                                    <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1282100/header.jpg?t=1729615170" alt="Remnant II">
+                                    <div class="recommendation-tag">Trending</div>
+                                </div>
+                                <div class="game-info">
+                                    <h3>Remnant II</h3>
+                                    <p class="game-genre">Action/RPG</p>
+                                    <div class="rating-stars">
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="half-filled"></i>
+                                        <span>(4.5)</span>
+                                    </div>
+                                    <p class="game-hours">Average Time: 25h</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- On Your Wishlist -->
+                    <div class="recommendation-group">
+                        <h3>Games You Might Like</h3>
+                        <div class="game-grid">
+                            <div class="game-card">
+                                <div class="game-image">
+                                    <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2054970/header.jpg?t=1732148252" alt="Dragon's Dogma 2">
+                                    <div class="recommendation-tag">Coming Soon</div>
+                                </div>
+                                <div class="game-info">
+                                    <h3>Dragon's Dogma 2</h3>
+                                    <p class="game-genre">Action/RPG</p>
+                                    <div class="rating-stars">
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star"></i>
+                                        <span>(4.0)</span>
+                                    </div>
+                                    <p class="game-release">Release: March 22, 2024</p>
+                                </div>
+                            </div>
+
+                            <div class="game-card">
+                                <div class="game-image">
+                                    <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg?t=1744876595" alt="Black Myth: Wukong">
+                                    <div class="recommendation-tag">Most Anticipated</div>
+                                </div>
+                                <div class="game-info">
+                                    <h3>Black Myth: Wukong</h3>
+                                    <p class="game-genre">Action/RPG</p>
+                                    <div class="rating-stars">
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="filled"></i>
+                                        <i data-lucide="star" class="half-filled"></i>
+                                        <span>(4.5)</span>
+                                    </div>
+                                    <p class="game-release">Release: August 20, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- New Releases Section -->
+            <section class="section">
+                <h2 class="section-title">
+                    <i data-lucide="sparkles" class="icon gaming"></i> 
+                    New Releases
+                </h2>
+                <div class="game-grid">
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1282100/header.jpg?t=1729615170" alt="Remnant II">
+                            <div class="release-date">Released: Dec 5, 2023</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Remnant II</h3>
+                            <p class="game-genre">Action/RPG</p>
+                            <div class="rating-stars">
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="half-filled"></i>
+                                <span>(4.5)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://www.datocms-assets.com/150395/1738856903-lies-of-p-pc-game-steam-cover.jpg?auto=format&fit=max&w=1200" alt="Lies of P">
+                            <div class="release-date">Released: Nov 28, 2023</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Lies of P</h3>
+                            <p class="game-genre">Action/RPG</p>
+                            <div class="rating-stars">
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star"></i>
+                                <span>(4.2)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-card">
+                        <div class="game-image">
+                            <img src="https://i.ytimg.com/vi/sbW1HEtgip4/maxresdefault.jpg" alt="Lords of the Fallen">
+                            <div class="release-date">Released: Nov 15, 2023</div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Lords of the Fallen</h3>
+                            <p class="game-genre">Action/RPG</p>
+                            <div class="rating-stars">
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star" class="filled"></i>
+                                <i data-lucide="star"></i>
+                                <span>(4.0)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Categories Section -->
+            <section class="section">
+                <h2 class="section-title">
+                    <i data-lucide="layout-grid" class="icon gaming"></i> 
+                    Popular Categories
+                </h2>
+                <div class="category-grid">
+                    <div class="category-card action">
+                        <i data-lucide="swords" class="category-icon"></i>
+                        <h3>Action</h3>
+                        <p>150+ Games</p>
+                    </div>
+                    <div class="category-card rpg">
+                        <i data-lucide="shield" class="category-icon"></i>
+                        <h3>RPG</h3>
+                        <p>200+ Games</p>
+                    </div>
+                    <div class="category-card strategy">
+                        <i data-lucide="chess" class="category-icon"></i>
+                        <h3>Strategy</h3>
+                        <p>80+ Games</p>
+                    </div>
+                    <div class="category-card sports">
+                        <i data-lucide="trophy" class="category-icon"></i>
+                        <h3>Sports</h3>
+                        <p>60+ Games</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="footer-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shared.js"></script>
+    <script src="../js/menu.js"></script>
+    <script>
+        // Initialize menu functionality
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load components
+            Promise.all([
+                fetch('../navbar/navbar.html').then(res => res.text()),
+                fetch('../footer/footer.html').then(res => res.text())
+            ]).then(([navbarHtml, footerHtml]) => {
+                document.getElementById('navbar-container').innerHTML = navbarHtml;
+                document.getElementById('footer-container').innerHTML = footerHtml;
+
+                // Load navbar script
+                const navbarScript = document.createElement('script');
+                navbarScript.src = '../navbar/navbar.js';
+                document.body.appendChild(navbarScript);
+
+                // Initialize menu
+                new DynamicMenu();
+
+                // Initialize Lucide icons
+                lucide.createIcons();
+            }).catch(err => console.error("Failed to load components:", err));
+        });
+    </script>
+</body>
+</html> 

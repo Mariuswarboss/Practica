@@ -1,21 +1,70 @@
 <nav class="navbar">
     <div class="navbar-left">
-        <div class="logo">GCM</div>
+        <button id="menu-toggle" class="menu-toggle" onclick="toggleMenu()">
+            <i class='bx bx-menu'></i>
+        </button>
+        <div class="logo">MGC</div>
         <div class="user-menu">
             <img src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=1024x1024&w=is&k=20&c=oGqYHhfkz_ifeE6-dID6aM7bLz38C6vQTy1YcbgZfx8=" alt="User" class="user-avatar">
             <span class="username">User</span>
         </div>
     </div>
-    <div class="search-bar">
-        <input type="text" placeholder="Search games..." />
-        <button><i class="fas fa-search"></i></button>
-    </div>
     <div class="navbar-right">
         <button class="profile-btn" onclick="window.location.href='../profil/profil.html'">
-            <i class="fas fa-user"></i> Profile
+            <i class='bx bx-user'></i> Profile
         </button>
         <button class="logout-btn" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i> Logout
+            <i class='bx bx-log-out'></i> Logout
         </button>
     </div>
-  </nav>
+</nav>
+
+<!-- Menu -->
+<div class="dynamic-menu">
+    <ul class="menu-list">
+        <li class="menu-item">
+            <a href="../Main_conten/Home.html" class="menu-link">
+                <i class='bx bx-home'></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="../Main_conten/my_game.html" class="menu-link">
+                <i class='bx bx-game'></i>
+                <span>My Games</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="../Main_conten/Collections.html" class="menu-link">
+                <i class='bx bx-collection'></i>
+                <span>Collections</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="../Main_conten/reviews.html" class="menu-link">
+                <i class='bx bx-star'></i>
+                <span>Reviews</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="../Main_conten/Notifications.html" class="menu-link">
+                <i class='bx bx-bell'></i>
+                <span>Notifications</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="../profil/profil.html" class="menu-link">
+                <i class='bx bx-user'></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="../Main_conten/Settings.html" class="menu-link">
+                <i class='bx bx-cog'></i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="menu-overlay"></div>

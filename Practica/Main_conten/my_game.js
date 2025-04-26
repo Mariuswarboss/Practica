@@ -1,239 +1,253 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const addGameBtn = document.getElementById('addGameBtn');
-    const addGameBtnEmpty = document.getElementById('addGameBtnEmpty');
-    const modal = document.getElementById('addGameModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const addGameForm = document.getElementById('addGameForm');
+// Default games data
+const defaultGames = [
+    {
+        id: 1,
+        title: "The Witcher 3: Wild Hunt",
+        genre: "RPG",
+        platform: "PC",
+        image: "https://upload.wikimedia.org/wikipedia/en/0/0c/Witcher_3_cover_art.jpg",
+        status: "Completed",
+        progress: 100,
+        rating: 5,
+        notes: "One of the best RPGs ever made. Amazing story and world."
+    },
+    {
+        id: 2,
+        title: "Cyberpunk 2077",
+        genre: "Action RPG",
+        platform: "PlayStation 5",
+        image: "https://image.api.playstation.com/vulcan/ap/rnd/202111/3013/cKZ4tKNFj9C00DYkYz1UoWtM.png",
+        status: "Playing",
+        progress: 75,
+        rating: 4,
+        notes: "Fantastic atmosphere and engaging story."
+    },
+    {
+        id: 3,
+        title: "Elden Ring",
+        genre: "Action RPG",
+        platform: "PC",
+        image: "image.png",
+        status: "Playing",
+        progress: 60,
+        rating: 5,
+        notes: "Challenging but incredibly rewarding."
+    }
+];
+
+// Initialize games in localStorage if not present
+if (!localStorage.getItem('games')) {
+    localStorage.setItem('games', JSON.stringify(defaultGames));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
     const gameGrid = document.getElementById('gameGrid');
     const emptyState = document.getElementById('emptyState');
+    const addGameModal = document.getElementById('addGameModal');
+    const addGameForm = document.getElementById('addGameForm');
     const searchInput = document.getElementById('searchGameInput');
-    const imageInput = document.getElementById('gameImage');
-    const imagePreview = document.getElementById('imagePreview');
-    const stars = document.querySelectorAll('.star');
-    const ratingInput = document.getElementById('gameRating');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const addGameBtn = document.getElementById('addGameBtn');
+    const addGameBtnEmpty = document.getElementById('addGameBtnEmpty');
 
-    // Initialize games from localStorage
-    let games = JSON.parse(localStorage.getItem('games')) || [];
-    updateGameDisplay();
+    // Load and display games
+    function loadGames() {
+        const games = JSON.parse(localStorage.getItem('games')) || [];
+        gameGrid.innerHTML = '';
 
-    // Event Listeners
-    addGameBtn.addEventListener('click', openModal);
-    addGameBtnEmpty.addEventListener('click', openModal);
-    closeModalBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
-    searchInput.addEventListener('input', handleSearch);
-
-    // Handle image preview
-    imageInput.addEventListener('input', function() {
-        const url = this.value;
-        if (url) {
-            imagePreview.style.backgroundImage = `url(${url})`;
-            imagePreview.innerHTML = '';
+        if (games.length === 0) {
+            emptyState.style.display = 'flex';
+            gameGrid.style.display = 'none';
         } else {
-            imagePreview.style.backgroundImage = 'none';
-            imagePreview.innerHTML = 'Image preview will appear here';
+            emptyState.style.display = 'none';
+            gameGrid.style.display = 'grid';
+            games.forEach(game => {
+                gameGrid.appendChild(createGameCard(game));
+            });
         }
-    });
+    }
 
-    // Handle star rating
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const value = parseInt(star.getAttribute('data-value'));
-            ratingInput.value = value;
-            updateStars(value);
-        });
-    });
+    // Create game card
+    function createGameCard(game) {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+            <div class="game-card-image">
+                <img src="${game.image}" alt="${game.title}">
+                <div class="game-card-overlay">
+                    <span class="game-status ${game.status.toLowerCase().replace(' ', '-')}">${game.status}</span>
+                    <div class="game-progress">
+                        <div class="progress-bar" style="width: ${game.progress}%"></div>
+                        <span>${game.progress}%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="game-card-content">
+                <h3>${game.title}</h3>
+                <div class="game-card-info">
+                    <span class="game-genre">${game.genre}</span>
+                    <span class="game-platform">${game.platform}</span>
+                </div>
+                <div class="game-card-rating">
+                    ${createStarRating(game.rating)}
+                </div>
+                <p class="game-notes">${game.notes}</p>
+                <div class="game-card-actions">
+                    <button class="btn-icon edit-game" onclick="editGame(${game.id})">
+                        <i class='bx bx-edit'></i>
+                    </button>
+                    <button class="btn-icon delete-game" onclick="deleteGame(${game.id})">
+                        <i class='bx bx-trash'></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        return card;
+    }
 
-    // Form submission
-    addGameForm.addEventListener('submit', function(e) {
+    // Create star rating
+    function createStarRating(rating) {
+        return Array(5).fill(0).map((_, i) => 
+            `<i class='bx ${i < rating ? 'bxs-star' : 'bx-star'}'></i>`
+        ).join('');
+    }
+
+    // Add new game
+    addGameForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+        const games = JSON.parse(localStorage.getItem('games')) || [];
         const newGame = {
             id: Date.now(),
             title: document.getElementById('gameTitle').value,
             genre: document.getElementById('gameGenre').value,
             platform: document.getElementById('gamePlatform').value,
-            image: document.getElementById('gameImage').value || 'https://via.placeholder.com/300x200?text=Game+Cover',
+            image: document.getElementById('gameImage').value || 'https://via.placeholder.com/300x400?text=Game+Cover',
             status: document.getElementById('gameStatus').value,
-            progress: document.getElementById('gameProgress').value || 0,
+            progress: parseInt(document.getElementById('gameProgress').value) || 0,
             rating: parseInt(document.getElementById('gameRating').value) || 0,
-            notes: document.getElementById('gameNotes').value,
-            addedDate: new Date().toISOString()
+            notes: document.getElementById('gameNotes').value
         };
 
         games.push(newGame);
         localStorage.setItem('games', JSON.stringify(games));
-        updateGameDisplay();
-        closeModal();
-        showSuccessMessage('Game added successfully!');
+        addGameModal.classList.remove('show');
+        loadGames();
         addGameForm.reset();
-        imagePreview.style.backgroundImage = 'none';
-        imagePreview.innerHTML = 'Image preview will appear here';
-        updateStars(0);
     });
 
-    // Functions
-    function openModal() {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        addGameForm.reset();
-        imagePreview.style.backgroundImage = 'none';
-        imagePreview.innerHTML = 'Image preview will appear here';
-        updateStars(0);
-    }
-
-    function updateStars(value) {
-        stars.forEach((star, index) => {
-            star.classList.toggle('active', index < value);
-        });
-    }
-
-    function handleSearch() {
-        const searchTerm = searchInput.value.toLowerCase();
-        updateGameDisplay(searchTerm);
-    }
-
-    function updateGameDisplay(searchTerm = '') {
+    // Search functionality
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const games = JSON.parse(localStorage.getItem('games')) || [];
         const filteredGames = games.filter(game => 
             game.title.toLowerCase().includes(searchTerm) ||
             game.genre.toLowerCase().includes(searchTerm) ||
             game.platform.toLowerCase().includes(searchTerm)
         );
 
+        gameGrid.innerHTML = '';
         if (filteredGames.length === 0) {
+            emptyState.style.display = 'flex';
             gameGrid.style.display = 'none';
-            emptyState.style.display = 'block';
         } else {
-            gameGrid.style.display = 'grid';
             emptyState.style.display = 'none';
-            
-            gameGrid.innerHTML = filteredGames.map(game => `
-                <div class="game-card" data-id="${game.id}">
-                    <div class="game-card-image" style="background-image: url('${game.image}')">
-                        <div class="game-card-overlay">
-                            <span class="game-status ${game.status.toLowerCase().replace(' ', '-')}">${game.status}</span>
-                            <div class="game-progress">
-                                <div class="progress-bar" style="width: ${game.progress}%"></div>
-                                <span>${game.progress}%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="game-card-content">
-                        <h3>${game.title}</h3>
-                        <div class="game-card-info">
-                            <span class="game-genre">${game.genre}</span>
-                            <span class="game-platform">${game.platform}</span>
-                        </div>
-                        <div class="game-card-rating">
-                            ${generateStars(game.rating)}
-                        </div>
-                        ${game.notes ? `<p class="game-notes">${game.notes}</p>` : ''}
-                        <div class="game-card-actions">
-                            <button class="btn-icon edit-game" onclick="editGame(${game.id})">
-                                <i class='bx bx-edit'></i>
-                            </button>
-                            <button class="btn-icon delete-game" onclick="deleteGame(${game.id})">
-                                <i class='bx bx-trash'></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+            gameGrid.style.display = 'grid';
+            filteredGames.forEach(game => {
+                gameGrid.appendChild(createGameCard(game));
+            });
         }
-    }
-
-    function generateStars(rating) {
-        return Array.from({ length: 5 }, (_, i) => `
-            <i class='bx ${i < rating ? 'bxs-star' : 'bx-star'}'></i>
-        `).join('');
-    }
-
-    function showSuccessMessage(message) {
-        const successMessage = document.createElement('div');
-        successMessage.className = 'success-message';
-        successMessage.innerHTML = `
-            <i class='bx bx-check'></i>
-            <span>${message}</span>
-        `;
-        document.body.appendChild(successMessage);
-        
-        setTimeout(() => {
-            successMessage.style.animation = 'slideOut 0.3s ease';
-            setTimeout(() => successMessage.remove(), 300);
-        }, 3000);
-    }
-});
-
-// Global functions for edit and delete
-window.editGame = function(gameId) {
-    const games = JSON.parse(localStorage.getItem('games')) || [];
-    const game = games.find(g => g.id === gameId);
-    if (!game) return;
-
-    // Populate form with game data
-    document.getElementById('gameTitle').value = game.title;
-    document.getElementById('gameGenre').value = game.genre;
-    document.getElementById('gamePlatform').value = game.platform;
-    document.getElementById('gameImage').value = game.image;
-    document.getElementById('gameStatus').value = game.status;
-    document.getElementById('gameProgress').value = game.progress;
-    document.getElementById('gameRating').value = game.rating;
-    document.getElementById('gameNotes').value = game.notes;
-
-    // Update image preview
-    const imagePreview = document.getElementById('imagePreview');
-    imagePreview.style.backgroundImage = `url(${game.image})`;
-    imagePreview.innerHTML = '';
-
-    // Update stars
-    const stars = document.querySelectorAll('.star');
-    stars.forEach((star, index) => {
-        star.classList.toggle('active', index < game.rating);
     });
 
-    // Show modal
-    const modal = document.getElementById('addGameModal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    // Modal controls
+    [addGameBtn, addGameBtnEmpty].forEach(btn => {
+        btn.addEventListener('click', () => {
+            addGameModal.classList.add('show');
+        });
+    });
 
-    // Update form submission to handle edit
-    const form = document.getElementById('addGameForm');
-    form.onsubmit = function(e) {
-        e.preventDefault();
-        
-        const updatedGame = {
-            ...game,
-            title: document.getElementById('gameTitle').value,
-            genre: document.getElementById('gameGenre').value,
-            platform: document.getElementById('gamePlatform').value,
-            image: document.getElementById('gameImage').value || game.image,
-            status: document.getElementById('gameStatus').value,
-            progress: document.getElementById('gameProgress').value || 0,
-            rating: parseInt(document.getElementById('gameRating').value) || 0,
-            notes: document.getElementById('gameNotes').value,
-            updatedDate: new Date().toISOString()
-        };
+    closeModalBtn.addEventListener('click', () => {
+        addGameModal.classList.remove('show');
+        addGameForm.reset();
+    });
 
-        const gameIndex = games.findIndex(g => g.id === gameId);
-        games[gameIndex] = updatedGame;
-        localStorage.setItem('games', JSON.stringify(games));
-        
-        location.reload();
+    // Star rating functionality
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('gameRating');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = parseInt(star.dataset.value);
+            ratingInput.value = value;
+            stars.forEach(s => {
+                s.classList.toggle('bxs-star', parseInt(s.dataset.value) <= value);
+                s.classList.toggle('bx-star', parseInt(s.dataset.value) > value);
+            });
+        });
+    });
+
+    // Delete game
+    window.deleteGame = (gameId) => {
+        if (confirm('Are you sure you want to delete this game?')) {
+            const games = JSON.parse(localStorage.getItem('games')) || [];
+            const updatedGames = games.filter(game => game.id !== gameId);
+            localStorage.setItem('games', JSON.stringify(updatedGames));
+            loadGames();
+        }
     };
-};
 
-window.deleteGame = function(gameId) {
-    if (confirm('Are you sure you want to delete this game?')) {
-        let games = JSON.parse(localStorage.getItem('games')) || [];
-        games = games.filter(game => game.id !== gameId);
-        localStorage.setItem('games', JSON.stringify(games));
-        location.reload();
-    }
-};
+    // Edit game
+    window.editGame = (gameId) => {
+        const games = JSON.parse(localStorage.getItem('games')) || [];
+        const game = games.find(g => g.id === gameId);
+        if (game) {
+            // Populate form with game data
+            document.getElementById('gameTitle').value = game.title;
+            document.getElementById('gameGenre').value = game.genre;
+            document.getElementById('gamePlatform').value = game.platform;
+            document.getElementById('gameImage').value = game.image;
+            document.getElementById('gameStatus').value = game.status;
+            document.getElementById('gameProgress').value = game.progress;
+            document.getElementById('gameRating').value = game.rating;
+            document.getElementById('gameNotes').value = game.notes;
+            
+            // Update stars display
+            stars.forEach(s => {
+                s.classList.toggle('bxs-star', parseInt(s.dataset.value) <= game.rating);
+                s.classList.toggle('bx-star', parseInt(s.dataset.value) > game.rating);
+            });
+
+            // Show modal
+            addGameModal.classList.add('show');
+            
+            // Update form submission to handle edit
+            const originalSubmit = addGameForm.onsubmit;
+            addGameForm.onsubmit = (e) => {
+                e.preventDefault();
+                const updatedGames = games.map(g => {
+                    if (g.id === gameId) {
+                        return {
+                            ...g,
+                            title: document.getElementById('gameTitle').value,
+                            genre: document.getElementById('gameGenre').value,
+                            platform: document.getElementById('gamePlatform').value,
+                            image: document.getElementById('gameImage').value,
+                            status: document.getElementById('gameStatus').value,
+                            progress: parseInt(document.getElementById('gameProgress').value) || 0,
+                            rating: parseInt(document.getElementById('gameRating').value) || 0,
+                            notes: document.getElementById('gameNotes').value
+                        };
+                    }
+                    return g;
+                });
+                localStorage.setItem('games', JSON.stringify(updatedGames));
+                addGameModal.classList.remove('show');
+                loadGames();
+                addGameForm.reset();
+                addGameForm.onsubmit = originalSubmit;
+            };
+        }
+    };
+
+    // Initial load
+    loadGames();
+});

@@ -1,0 +1,453 @@
+/* Layout */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--clr-background);
+    color: var(--clr-text);
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 60px; /* Space for navbar */
+}
+
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 250px; /* Match sidebar width */
+    width: calc(100% - 250px);
+    transition: margin-left 0.3s ease;
+}
+
+/* My Games Container */
+.my-games-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-header h1 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.8rem;
+    color: var(--clr-text);
+}
+
+.section-header h1 i {
+    color: var(--clr-primary);
+    font-size: 2rem;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+    min-width: 300px;
+}
+
+.search-container i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--clr-text-light);
+}
+
+.search-container input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    background: var(--clr-input-bg);
+    color: var(--clr-text);
+    font-size: 1rem;
+}
+
+.search-container input:focus {
+    border-color: var(--clr-primary);
+    outline: none;
+}
+
+/* Add Game Button */
+.add-game-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--clr-primary);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-game-btn:hover {
+    background: var(--clr-primary-variant);
+    transform: translateY(-2px);
+}
+
+/* Game Grid */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Game Card */
+.game-card {
+    background: var(--clr-card-bg);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+}
+
+.game-image {
+    position: relative;
+    padding-top: 133%; /* 3:4 aspect ratio */
+}
+
+.game-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.status-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+}
+
+.status-playing { background: var(--clr-primary); }
+.status-completed { background: var(--clr-success); }
+.status-on-hold { background: var(--clr-warning); }
+.status-dropped { background: var(--clr-danger); }
+.status-plan-to-play { background: var(--clr-info); }
+
+.game-info {
+    padding: 1rem;
+}
+
+.game-info h3 {
+    font-size: 1.1rem;
+    color: var(--clr-text);
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-genre {
+    color: var(--clr-text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.rating {
+    color: var(--clr-warning);
+    font-size: 1.1rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--clr-text-light);
+}
+
+.empty-state .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--clr-text-light);
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    color: var(--clr-text);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: var(--clr-text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--clr-card-bg);
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--clr-border);
+}
+
+.modal-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    color: var(--clr-text);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: var(--clr-text-light);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.close-modal:hover {
+    color: var(--clr-text);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--clr-text);
+    font-weight: 500;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    background: var(--clr-input-bg);
+    color: var(--clr-text);
+    font-size: 1rem;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--clr-primary);
+    outline: none;
+}
+
+/* Image Upload */
+.image-upload {
+    margin-bottom: 1rem;
+}
+
+.image-preview {
+    margin-top: 1rem;
+    width: 100%;
+    height: 200px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--clr-border);
+    display: none;
+}
+
+.image-preview.show {
+    display: block;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Rating Input */
+.rating-input {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stars {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.stars i {
+    font-size: 1.5rem;
+    color: var(--clr-text-light);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.stars i:hover,
+.stars i.active {
+    color: var(--clr-warning);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    background: var(--clr-card-bg);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    color: var(--clr-text);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--clr-hover);
+}
+
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    background: var(--clr-primary);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: var(--clr-primary-variant);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .my-games-container {
+        padding: 1rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .search-container {
+        min-width: 100%;
+    }
+
+    .add-game-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .modal-content {
+        margin: 0.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+} 

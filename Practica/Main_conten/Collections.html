@@ -3,50 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collection</title>
+    <title>Collections - Marius Game Collection</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="collections.css">
+    <link rel="stylesheet" href="../footer/footer.css">
+    <link rel="stylesheet" href="components.css">
+    <script>
+        // Initialize theme before DOM loads to prevent flash
+        const savedSettings = JSON.parse(localStorage.getItem('siteSettings') || '{}');
+        const theme = savedSettings.theme || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Apply accent color if set
+        if (savedSettings.accentColor) {
+            document.documentElement.style.setProperty('--clr-primary', savedSettings.accentColor);
+        }
+    </script>
+    <style>
+        .main-content {
+            margin-left: 0 !important;
+            margin-top: 60px;
+            padding: 2rem;
+        }
+    </style>
 </head>
 <body>
+    <div id="navbar-container"></div>
+
     <div class="layout">
         <main class="main-content">
-            <h1 class="section-title"><i data-lucide="folder-open" class="icon gaming"></i> Collections</h1>
-            
-            <div class="collection-form">
-                <input type="text" placeholder="New collection name">
-                <button class="btn-primary">
-                    <i data-lucide="plus"></i> Create
-                </button>
-            </div>
-            
-            <div class="collection-grid">
-                <div class="collection-card">
-                    <div class="collection-icon">
-                        <i data-lucide="folder" class="gaming"></i>
-                    </div>
-                    <div class="collection-info">
-                        <h3>Favorite RPGs</h3>
-                        <p>2 games</p>
-                    </div>
-                    <button class="delete-btn">
-                        <i data-lucide="trash-2"></i>
+            <div class="collections-container">
+                <div class="section-header">
+                    <h1>
+                        <i class='bx bx-collection'></i>
+                        My Collections
+                    </h1>
+                    <button class="add-collection-btn" id="newCollectionBtn">
+                        <i class='bx bx-plus'></i>
+                        New Collection
                     </button>
                 </div>
-                <!-- More collection cards -->
-            </div>
-            
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <i data-lucide="folder-open" class="gaming"></i>
+
+                <div class="collections-grid" id="collectionsGrid">
+                    <!-- Collections will be dynamically added here -->
                 </div>
-                <h2>No collections yet</h2>
-                <p>Create your first collection to organize your games.</p>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <i class='bx bx-collection'></i>
+                    </div>
+                    <h2>No Collections Yet</h2>
+                    <p>Create your first collection to organize your games</p>
+                    <button class="add-collection-btn" id="newCollectionBtnEmpty">
+                        <i class='bx bx-plus'></i>
+                        Create Collection
+                    </button>
+                </div>
             </div>
         </main>
+        <div id="footer-container"></div>
     </div>
-    <script src="main.js">
-        lucide.createIcons();
+
+    <!-- New Collection Modal -->
+    <div class="modal" id="newCollectionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class='bx bx-collection'></i> Create New Collection</h3>
+                <button class="close-modal" id="closeNewCollectionModal">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="newCollectionForm">
+                    <div class="form-group">
+                        <label for="collectionName">Collection Name</label>
+                        <input type="text" id="collectionName" required placeholder="Enter collection name">
+                    </div>
+                    <div class="form-group">
+                        <label for="collectionDescription">Description (Optional)</label>
+                        <textarea id="collectionDescription" rows="3" placeholder="Describe your collection..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelNewCollection">Cancel</button>
+                        <button type="submit" class="btn-primary">Create Collection</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collection Details Modal -->
+    <div class="modal" id="collectionDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="collectionDetailsTitle"></h3>
+                <button class="close-modal" id="closeCollectionDetailsModal">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="collection-details">
+                    <p id="collectionDescription"></p>
+                    <div class="collection-stats">
+                        <span id="gameCount">0 games</span>
+                        <span id="totalPlaytime">0 hours played</span>
+                    </div>
+                </div>
+                <div class="collection-games">
+                    <div class="games-header">
+                        <h4>Games in Collection</h4>
+                        <button class="btn-primary" id="addGamesToCollection">
+                            <i class='bx bx-plus'></i>
+                            Add Games
+                        </button>
+                    </div>
+                    <div class="games-grid" id="collectionGamesGrid">
+                        <!-- Games will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Games Modal -->
+    <div class="modal" id="addGamesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class='bx bx-game'></i> Add Games to Collection</h3>
+                <button class="close-modal" id="closeAddGamesModal">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="search-container">
+                    <i class='bx bx-search'></i>
+                    <input type="text" id="gameSearchInput" placeholder="Search your games...">
+                </div>
+                <div class="games-grid selectable" id="availableGamesGrid">
+                    <!-- Available games will be loaded here -->
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelAddGames">Cancel</button>
+                    <button type="button" class="btn-primary" id="confirmAddGames">Add Selected Games</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/shared.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="collections.js"></script>
+    <script>
+        // Initialize menu functionality
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load components
+            Promise.all([
+                fetch('../navbar/navbar.html').then(res => res.text()),
+                fetch('../footer/footer.html').then(res => res.text())
+            ]).then(([navbarHtml, footerHtml]) => {
+                document.getElementById('navbar-container').innerHTML = navbarHtml;
+                document.getElementById('footer-container').innerHTML = footerHtml;
+
+                // Load component scripts
+                const navbarScript = document.createElement('script');
+                navbarScript.src = '../navbar/navbar.js';
+                document.body.appendChild(navbarScript);
+
+                const footerScript = document.createElement('script');
+                footerScript.src = '../footer/footer.js';
+                document.body.appendChild(footerScript);
+            }).catch(err => console.error("Failed to load components:", err));
+        });
     </script>
 </body>
 </html>

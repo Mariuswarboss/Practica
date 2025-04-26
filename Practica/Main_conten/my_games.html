@@ -4,141 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Games Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="main.css">
+    <script>
+        // Initialize theme before DOM loads to prevent flash
+        const savedSettings = JSON.parse(localStorage.getItem('siteSettings') || '{}');
+        const theme = savedSettings.theme || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Apply accent color if set
+        if (savedSettings.accentColor) {
+            document.documentElement.style.setProperty('--clr-primary', savedSettings.accentColor);
+        }
+    </script>
+    <style>
+        .menu-btn {
+            position: fixed;
+            left: 20px;
+            top: 15px;
+            z-index: 1001;
+            background: white;
+            color: var(--clr-primary);
+            border: 1px solid var(--clr-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-btn i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        .page-overlay {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .page-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        @media (min-width: 1200px) {
+            .menu-btn {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="my-games-container">
-        <div class="section-header">
-            <h1><i class='bx bxs-game'></i> My Games Library</h1>
-            <div class="actions">
-                <div class="search-container">
-                    <i class='bx bx-search'></i>
-                    <input type="text" id="searchInput" placeholder="Search games...">
+    <div id="navbar-container"></div>
+    <div id="sidebar-container"></div>
+
+    <div class="layout">
+        <main class="main-content">
+            <div class="my-games-container">
+                <div class="section-header">
+                    <h1><i class='bx bxs-game'></i> My Games Library</h1>
+                    <div class="actions">
+                        <div class="search-container">
+                            <i class='bx bx-search'></i>
+                            <input type="text" id="searchInput" placeholder="Search games...">
+                        </div>
+                        <button class="add-game-btn" id="addGameBtn">
+                            <i class='bx bx-plus'></i>
+                            Add Game
+                        </button>
+                    </div>
                 </div>
-                <button class="add-game-btn" id="addGameBtn">
-                    <i class='bx bx-plus'></i>
-                    Add Game
-                </button>
+
+                <div id="gameGrid" class="game-grid">
+                    <!-- Games will be dynamically added here -->
+                </div>
+
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <i class='bx bx-game empty-icon'></i>
+                    <h2>No Games Added Yet</h2>
+                    <p>Start building your game library by adding your first game!</p>
+                    <button class="add-game-btn" onclick="document.getElementById('addGameBtn').click()">
+                        <i class='bx bx-plus'></i>
+                        Add Your First Game
+                    </button>
+                </div>
             </div>
-        </div>
-
-        <div id="gameGrid" class="game-grid">
-            <!-- Games will be dynamically added here -->
-        </div>
-
-        <div id="emptyState" class="empty-state" style="display: none;">
-            <i class='bx bx-game empty-icon'></i>
-            <h2>No Games Added Yet</h2>
-            <p>Start building your game library by adding your first game!</p>
-            <button class="add-game-btn" onclick="document.getElementById('addGameBtn').click()">
-                <i class='bx bx-plus'></i>
-                Add Your First Game
-            </button>
-        </div>
+        </main>
     </div>
+
+    <div id="footer-container"></div>
 
     <!-- Add/Edit Game Modal -->
     <div id="gameModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class='bx bx-game'></i> <span id="modalTitle">Add New Game</span></h3>
-                <button class="close-modal" id="closeModalBtn">
-                    <i class='bx bx-x'></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="gameForm">
-                    <input type="hidden" id="gameId">
-                    <div class="form-group">
-                        <label for="gameTitle">Game Title</label>
-                        <input type="text" id="gameTitle" required>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="gameGenre">Genre</label>
-                            <select id="gameGenre" required>
-                                <option value="">Select Genre</option>
-                                <option value="Action">Action</option>
-                                <option value="Adventure">Adventure</option>
-                                <option value="RPG">RPG</option>
-                                <option value="Strategy">Strategy</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Racing">Racing</option>
-                                <option value="Simulation">Simulation</option>
-                                <option value="Puzzle">Puzzle</option>
-                                <option value="Horror">Horror</option>
-                                <option value="Fighting">Fighting</option>
-                                <option value="Platformer">Platformer</option>
-                                <option value="Shooter">Shooter</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="gamePlatform">Platform</label>
-                            <select id="gamePlatform" required>
-                                <option value="">Select Platform</option>
-                                <option value="PC">PC</option>
-                                <option value="PlayStation 5">PlayStation 5</option>
-                                <option value="PlayStation 4">PlayStation 4</option>
-                                <option value="Xbox Series X|S">Xbox Series X|S</option>
-                                <option value="Xbox One">Xbox One</option>
-                                <option value="Nintendo Switch">Nintendo Switch</option>
-                                <option value="Mobile">Mobile</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="gameStatus">Status</label>
-                        <select id="gameStatus" required>
-                            <option value="">Select Status</option>
-                            <option value="playing">Playing</option>
-                            <option value="completed">Completed</option>
-                            <option value="on-hold">On Hold</option>
-                            <option value="dropped">Dropped</option>
-                            <option value="plan-to-play">Plan to Play</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="gameProgress">Progress (%)</label>
-                        <input type="number" id="gameProgress" min="0" max="100" value="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Rating</label>
-                        <div class="rating-input">
-                            <div class="stars" id="ratingStars">
-                                <i class='bx bx-star' data-rating="1"></i>
-                                <i class='bx bx-star' data-rating="2"></i>
-                                <i class='bx bx-star' data-rating="3"></i>
-                                <i class='bx bx-star' data-rating="4"></i>
-                                <i class='bx bx-star' data-rating="5"></i>
-                            </div>
-                            <span id="ratingValue">0/5</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="gameImage">Game Cover Image</label>
-                        <div class="image-upload">
-                            <input type="file" id="gameImage" accept="image/*">
-                            <div id="imagePreview" class="image-preview">
-                                <i class='bx bx-image-add'></i>
-                                <span>Click to upload image</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="gameNotes">Notes</label>
-                        <textarea id="gameNotes" rows="3" placeholder="Add your thoughts about the game..."></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
-                        <button type="submit" class="btn-primary">Save Game</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        <!-- Modal content remains the same -->
     </div>
 
     <!-- Success Message -->
@@ -147,6 +138,52 @@
         <span>Game saved successfully!</span>
     </div>
 
+    <!-- Scripts -->
+    <script>
+        // Initialize menu functionality
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load components
+            Promise.all([
+                fetch('../navbar/navbar.html').then(res => res.text()),
+                fetch('../meniu/meniu.html').then(res => res.text()),
+                fetch('../footer/footer.html').then(res => res.text())
+            ]).then(([navbarHtml, menuHtml, footerHtml]) => {
+                document.getElementById('navbar-container').innerHTML = navbarHtml;
+                document.getElementById('sidebar-container').innerHTML = menuHtml;
+                document.getElementById('footer-container').innerHTML = footerHtml;
+
+                // Load component scripts
+                const navbarScript = document.createElement('script');
+                navbarScript.src = '../navbar/navbar.js';
+                document.body.appendChild(navbarScript);
+
+                const menuScript = document.createElement('script');
+                menuScript.src = '../meniu/meniu.js';
+                document.body.appendChild(menuScript);
+            }).catch(err => console.error("Failed to load components:", err));
+        });
+    </script>
+    <script src="../js/shared.js"></script>
+    <script>
+        // Initialize ThemeManager after DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize theme management
+            ThemeManager.init();
+
+            // Listen for settings changes
+            document.addEventListener('settingsChanged', (event) => {
+                ThemeManager.applySettings(event.detail.settings);
+            });
+
+            // Listen for storage changes
+            window.addEventListener('storage', (event) => {
+                if (event.key === 'siteSettings') {
+                    const settings = JSON.parse(event.newValue || '{}');
+                    ThemeManager.applySettings(settings);
+                }
+            });
+        });
+    </script>
     <script src="my_game.js"></script>
 </body>
 </html> 

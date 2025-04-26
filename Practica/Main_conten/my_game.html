@@ -3,13 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Games</title>
+    <title>My Games - Marius Game Collection</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../Main_conten/theme.css">
     <link rel="stylesheet" href="../navbar/navbar.css">
-    <link rel="stylesheet" href="../meniu/meniu.css">
+    <link rel="stylesheet" href="my_game.css">
     <link rel="stylesheet" href="../footer/footer.css">
+    <link rel="stylesheet" href="components.css">
+    <script>
+        // Initialize theme before DOM loads to prevent flash
+        const savedSettings = JSON.parse(localStorage.getItem('siteSettings') || '{}');
+        const theme = savedSettings.theme || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Apply accent color if set
+        if (savedSettings.accentColor) {
+            document.documentElement.style.setProperty('--clr-primary', savedSettings.accentColor);
+        }
+    </script>
+    <style>
+        /* Layout styles to ensure footer stays at bottom */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            margin-left: 0 !important;
+            margin-top: 60px;
+            padding: 2rem;
+        }
+
+        #footer-container {
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Rest of your existing styles */
+        .menu-btn {
+            position: fixed;
+            left: 20px;
+            top: 15px;
+            z-index: 1001;
+            background: white;
+            color: var(--clr-primary);
+            border: 1px solid var(--clr-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        .menu-btn i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        .page-overlay {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+
+        .page-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #navbar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        @media (min-width: 1200px) {
+            .menu-btn {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="navbar-container"></div>
@@ -162,57 +270,41 @@
                 </div>
             </div>
         </main>
+        <div id="footer-container"></div>
     </div>
-
-    <div id="footer-container"></div>
 
     <!-- Scripts -->
     <script>
-        // Check authentication and load components
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if user is logged in
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            if (!isLoggedIn || isLoggedIn !== "true") {
-                window.location.href = "/auth/login.html";
-                return;
-            }
+        // Initialize menu functionality
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load components
+            Promise.all([
+                fetch('../navbar/navbar.html').then(res => res.text()),
+                fetch('../meniu/meniu.html').then(res => res.text()),
+                fetch('../footer/footer.html').then(res => res.text())
+            ]).then(([navbarHtml, menuHtml, footerHtml]) => {
+                document.getElementById('navbar-container').innerHTML = navbarHtml;
+                document.getElementById('sidebar-container').innerHTML = menuHtml;
+                document.getElementById('footer-container').innerHTML = footerHtml;
 
-            // Load navbar
-            fetch('../navbar/navbar.html')
-                .then(res => res.text())
-                .then(data => {
-                    document.getElementById('navbar-container').innerHTML = data;
-                    const navbarScript = document.createElement('script');
-                    navbarScript.src = '../navbar/navbar.js';
-                    document.body.appendChild(navbarScript);
-                })
-                .catch(err => console.error("Navbar failed to load:", err));
+                // Load component scripts
+                const navbarScript = document.createElement('script');
+                navbarScript.src = '../navbar/navbar.js';
+                document.body.appendChild(navbarScript);
 
-            // Load sidebar
-            fetch('../meniu/meniu.html')
-                .then(res => res.text())
-                .then(data => {
-                    document.getElementById('sidebar-container').innerHTML = data;
-                    const menuScript = document.createElement('script');
-                    menuScript.src = '../meniu/meniu.js';
-                    document.body.appendChild(menuScript);
-                })
-                .catch(err => console.error("Sidebar failed to load:", err));
+                const menuScript = document.createElement('script');
+                menuScript.src = '../meniu/meniu.js';
+                document.body.appendChild(menuScript);
 
-            // Load footer
-            fetch('../footer/footer.html')
-                .then(res => res.text())
-                .then(data => {
-                    document.getElementById('footer-container').innerHTML = data;
-                })
-                .catch(err => console.error("Footer failed to load:", err));
-
-            // Initialize game functionality
-            const gameScript = document.createElement('script');
-            gameScript.src = 'my_game.js';
-            document.body.appendChild(gameScript);
+                const footerScript = document.createElement('script');
+                footerScript.src = '../footer/footer.js';
+                document.body.appendChild(footerScript);
+            }).catch(err => console.error("Failed to load components:", err));
         });
     </script>
+    <script src="../js/shared.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="my_game.js"></script>
 </body>
 </html>
   
