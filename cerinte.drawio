@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" version="26.2.14">
   <diagram name="Page-1" id="bKEM55aSg7m3i56EgnbJ">
-    <mxGraphModel dx="744" dy="503" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="light-dark(#FFFFFF,#FFFFFF)" math="0" shadow="0">
+    <mxGraphModel dx="1615" dy="533" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="light-dark(#FFFFFF,#FFFFFF)" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -18,14 +18,14 @@
         </mxCell>
         <mxCell id="E4SWSjB8XkPXAVHv-QKt-6" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;strokeColor=light-dark(#000000,#000000);" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="441.89" y="405" as="sourcePoint" />
-            <mxPoint x="441.89" y="338" as="targetPoint" />
+            <mxPoint x="443.0011111111111" y="337.9999999999998" as="sourcePoint" />
+            <mxPoint x="443.0011111111111" y="404.9999999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="E4SWSjB8XkPXAVHv-QKt-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;strokeColor=light-dark(#000000,#000000);" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="228" y="405" as="sourcePoint" />
-            <mxPoint x="228" y="338" as="targetPoint" />
+            <mxPoint x="228" y="337.9999999999998" as="sourcePoint" />
+            <mxPoint x="228" y="404.9999999999998" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="E4SWSjB8XkPXAVHv-QKt-8" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;strokeColor=light-dark(#000000,#000000);" edge="1" parent="1">
@@ -37,14 +37,62 @@
         <mxCell id="E4SWSjB8XkPXAVHv-QKt-9" value="Login" style="html=1;whiteSpace=wrap;strokeColor=none;fillColor=#0079D6;labelPosition=center;verticalLabelPosition=middle;verticalAlign=top;align=center;fontSize=12;outlineConnect=0;spacingTop=-6;fontColor=#FFFFFF;sketch=0;shape=mxgraph.sitemap.login;" vertex="1" parent="1">
           <mxGeometry x="231" y="5" width="120" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="E4SWSjB8XkPXAVHv-QKt-10" value="Logare si inregistrare" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="168" y="10" width="63" height="60" as="geometry" />
-        </mxCell>
         <mxCell id="E4SWSjB8XkPXAVHv-QKt-11" value="Profile" style="html=1;whiteSpace=wrap;strokeColor=none;fillColor=#0079D6;labelPosition=center;verticalLabelPosition=middle;verticalAlign=top;align=center;fontSize=12;outlineConnect=0;spacingTop=-6;fontColor=#FFFFFF;sketch=0;shape=mxgraph.sitemap.profile;" vertex="1" parent="1">
           <mxGeometry x="458" y="3" width="120" height="70" as="geometry" />
         </mxCell>
         <mxCell id="E4SWSjB8XkPXAVHv-QKt-12" value="Editarea profilului" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="395" y="8" width="63" height="60" as="geometry" />
+          <mxGeometry x="378" y="8" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-13" value="" style="shape=image;html=1;verticalAlign=top;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn3.iconfinder.com/data/icons/marketing-filled-outline-3/64/Review-128.png" vertex="1" parent="1">
+          <mxGeometry x="447" y="396" width="98" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-14" value="Vizualizarea la recenzii" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="367" y="412" width="80" height="59" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-16" value="" style="image;html=1;image=img/lib/clip_art/computers/Database_Add_128x128.png" vertex="1" parent="1">
+          <mxGeometry x="234" y="405" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-17" value="Adugarea jocurilor si colectiilor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="151" y="412" width="80" height="59" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-18" value="Schimbarea la dark and light mode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="606" y="174" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-19" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;strokeColor=light-dark(#000000,#000000);" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="557.0044444444434" y="231" as="sourcePoint" />
+            <mxPoint x="608" y="231" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-21" value="Settings" style="html=1;whiteSpace=wrap;strokeColor=none;fillColor=#0079D6;labelPosition=center;verticalLabelPosition=middle;verticalAlign=top;align=center;fontSize=12;outlineConnect=0;spacingTop=-6;fontColor=#FFFFFF;sketch=0;shape=mxgraph.sitemap.settings;" vertex="1" parent="1">
+          <mxGeometry x="593" y="238" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-22" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;strokeColor=light-dark(#000000,#000000);" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="113.99999999999955" y="238" as="sourcePoint" />
+            <mxPoint x="63.004444444442925" y="238" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-23" value="" style="strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.android.rrect;rSize=0;strokeColor=#888888;fillColor=#444444;" vertex="1" parent="1">
+          <mxGeometry x="-80" y="255" width="185" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-24" value="Menu Item 1" style="strokeColor=inherit;fillColor=inherit;gradientColor=inherit;strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.android.rrect;rSize=0;align=left;spacingLeft=10;fontSize=8;fontColor=#ffffff;" vertex="1" parent="E4SWSjB8XkPXAVHv-QKt-23">
+          <mxGeometry width="185" height="12.5" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-25" value="Menu Item 2" style="strokeColor=inherit;fillColor=inherit;gradientColor=inherit;strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.android.rrect;rSize=0;align=left;spacingLeft=10;fontSize=8;fontColor=#ffffff;" vertex="1" parent="E4SWSjB8XkPXAVHv-QKt-23">
+          <mxGeometry y="12.5" width="185" height="12.5" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-26" value="Menu Item 3" style="strokeColor=inherit;fillColor=inherit;gradientColor=inherit;strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.android.rrect;rSize=0;align=left;spacingLeft=10;fontSize=8;fontColor=#ffffff;" vertex="1" parent="E4SWSjB8XkPXAVHv-QKt-23">
+          <mxGeometry y="25" width="185" height="12.5" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-27" value="Menu Item 4" style="strokeColor=inherit;fillColor=inherit;gradientColor=inherit;strokeWidth=1;html=1;shadow=0;dashed=0;shape=mxgraph.android.rrect;rSize=0;align=left;spacingLeft=10;fontSize=8;fontColor=#ffffff;" vertex="1" parent="E4SWSjB8XkPXAVHv-QKt-23">
+          <mxGeometry y="37.5" width="185" height="12.5" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-28" value="Logare si inregistrare" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="151" y="9" width="80" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="E4SWSjB8XkPXAVHv-QKt-29" value="Meniu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="-16" y="188" width="80" height="61" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
