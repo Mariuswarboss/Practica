@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" version="29.1.1">
   <diagram name="Page-1" id="HvV2izO4P3gEjG303Maj">
-    <mxGraphModel dx="865" dy="496" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="919" dy="528" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -29,22 +29,22 @@
             <mxPoint x="359" y="279" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="5xLXigW82TpJfGTstt5B-1" edge="1" parent="1" source="0CLnu53tD1r4upMBymbX-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0CLnu53tD1r4upMBymbX-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="0CLnu53tD1r4upMBymbX-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=default;" value="Utilizatorul modifca textul notei&amp;nbsp;" vertex="1">
           <mxGeometry height="40" width="120" x="296" y="199" as="geometry" />
         </mxCell>
-        <mxCell id="0CLnu53tD1r4upMBymbX-12" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontColor=#000000;fillColor=#ffffc0;strokeColor=default;" value="Condition" vertex="1">
-          <mxGeometry height="40" width="80" x="316" y="260" as="geometry" />
+        <mxCell id="5xLXigW82TpJfGTstt5B-2" edge="1" parent="1" source="0CLnu53tD1r4upMBymbX-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="0CLnu53tD1r4upMBymbX-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0CLnu53tD1r4upMBymbX-12" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontColor=#000000;fillColor=#ffffc0;strokeColor=default;" value="Validare text" vertex="1">
+          <mxGeometry height="49" width="88" x="316" y="260" as="geometry" />
         </mxCell>
         <mxCell id="0CLnu53tD1r4upMBymbX-13" edge="1" parent="1" source="0CLnu53tD1r4upMBymbX-12" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=default;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="0CLnu53tD1r4upMBymbX-21" value="Nu">
           <mxGeometry relative="1" x="-0.8411" y="-2" as="geometry">
             <mxPoint as="offset" />
             <mxPoint x="490" y="337" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="0CLnu53tD1r4upMBymbX-14" edge="1" parent="1" source="0CLnu53tD1r4upMBymbX-12" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=default;rounded=0;" target="0CLnu53tD1r4upMBymbX-16" value="Da">
-          <mxGeometry relative="1" x="-0.7399" y="-25" as="geometry">
-            <mxPoint as="offset" />
-            <mxPoint x="250" y="326" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="0CLnu53tD1r4upMBymbX-18" edge="1" parent="1" source="0CLnu53tD1r4upMBymbX-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;" target="0CLnu53tD1r4upMBymbX-17" value="">
